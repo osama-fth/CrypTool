@@ -1,24 +1,29 @@
-# CrypTool
+# CrypTool 🔐
 
-Applicazione web semplice per operazioni crittografiche di base, composta da un backend FastAPI e un frontend statico Bootstrap.
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Bootstrap 5](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-6BA539?logo=openapiinitiative&logoColor=white)](http://localhost:8080/docs)
+[![Swagger UI](https://img.shields.io/badge/Swagger%20UI-85EA2D?logo=swagger&logoColor=black)](http://localhost:8080/docs)
 
-- Backend: FastAPI, vedi [backend/app.py](backend/app.py)
-- Frontend: HTML/CSS/JS statici, vedi [frontend/index.html](frontend/index.html), [frontend/script.js](frontend/script.js), [frontend/styles.css](frontend/styles.css)
-- Container: [docker-compose.yml](docker-compose.yml)
+Applicazione web semplice per operazioni crittografiche di base, composta da un backend FastAPI e un frontend statico Bootstrap.  
+- Backend: FastAPI, vedi [backend/app.py](backend/app.py) ⚙️  
+- Frontend: HTML/CSS/JS statici, vedi [frontend/index.html](frontend/index.html), [frontend/script.js](frontend/script.js), [frontend/styles.css](frontend/styles.css) 🎨  
+- Container: [docker-compose.yml](docker-compose.yml) 🐳
 
-## Funzionalità
+## Funzionalità ✨
 
-- Cifrario di Cesare: cifratura/decifratura con scorrimento personalizzabile
-- Cifrario di Vigenère: cifratura/decifratura con chiave
-- Hash: MD5, SHA-1, SHA-256
-- Cifratura/Decifratura file con password (AES)
+- Cifrario di Cesare: cifratura/decifratura con scorrimento personalizzabile 🔁
+- Cifrario di Vigenère: cifratura/decifratura con chiave 🔑
+- Hash: MD5, SHA-1, SHA-256 🧮
+- Cifratura/Decifratura file con password (AES) 🗂️🔐
 
-## Requisiti
+## Requisiti 🧰
 
-- Docker e Docker Compose
-- Porte libere: 5173 (frontend), 8080 (backend)
+- Docker e Docker Compose 🐳
+- Porte libere: 5173 (frontend), 8080 (backend) 🔌
 
-## Avvio rapido
+## Avvio rapido 🚀
 
 Con Docker Compose (consigliato):
 
@@ -27,8 +32,8 @@ Con Docker Compose (consigliato):
 docker compose up --build
 ```
 
-- Interfaccia Web: http://localhost:5173
-- API/Swagger UI: http://localhost:8080/docs
+- Interfaccia Web: http://localhost:5173 🌐  
+- API/Swagger UI: http://localhost:8080/docs 📘
 
 Arresto:
 
@@ -42,7 +47,7 @@ Arresto con rimozione:
 docker compose down -v
 ```
 
-## API Reference (POST)
+## API Reference (POST) 🔗
 
 Base URL: http://localhost:8080
 
@@ -56,7 +61,7 @@ Esempio:
 
 ```bash
 curl -X POST http://localhost:8080/api/caesar \
--F "text=Hello, World! 123" -F "shift=3" -F "decode=false"
+  -F "text=Hello, World! 123" -F "shift=3" -F "decode=false"
 ```
 
 2) /api/vigenere  
