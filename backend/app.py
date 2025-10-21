@@ -1,25 +1,32 @@
-from fastapi import FastAPI, Form, UploadFile, File
+from fastapi import FastAPI, Form, UploadFile, File, Body
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from crypto_utils import caesar, vigenere, hashutils, aes_file
 import io
+import time
 
 app = FastAPI(title="CrypTool API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_methods=["POST"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
 @app.post("/api/caesar")
 async def caesar_api(text: str = Form(...), shift: int = Form(...), decode: bool = Form(False)):
-    if decode:
-        result = caesar.decrypt(text, shift)
-    else:
-        result = caesar.encrypt(text, shift)
+    result = caesar.decrypt(text, shift) if decode else caesar.encrypt(text, shift)
     return {"result": result}
+
+@app.post("/api/caesar/bruteforce")
+async def caesar_bruteforce(ciphertext: str = Form(...)):
+    start = time.perf_counter()
+    results = []
+    for s in range(1,26):
+        results.append({"shift": s, "plaintext": caesar.decrypt(ciphertext, s)})
+    total_ms = round((time.perf_counter() - start), 6)
+    return {"total_ms": total_ms, "results": results}
 
 @app.post("/api/vigenere")
 async def vigenere_api(text: str = Form(...), key: str = Form(...), decode: bool = Form(False)):
