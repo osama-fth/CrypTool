@@ -36,6 +36,20 @@ async def vigenere_api(text: str = Form(...), key: str = Form(...), decode: bool
         result = vigenere.encrypt(text, key)
     return {"result": result}
 
+@app.post("/api/vigenere/dictionaryattack")
+async def vigenere_dictionary_attack(text: str = Form(...), dictionary: str = Form(...)):
+    start = time.perf_counter()
+    results = []
+    
+    words = list(set([word.strip() for word in dictionary.replace(",", " ").replace("\n", " ").split() if word.strip()]))
+    
+    for key in words:
+        decrypted = vigenere.decrypt(text, key)
+        results.append({"key": key, "plaintext": decrypted})
+           
+    total_ms = round((time.perf_counter() - start), 6)  
+    return {"total_ms": total_ms, "results": results}
+
 @app.post("/api/hash")
 async def hash_api(text: str = Form(...), algorithm: str = Form("sha256")):
     result = hashutils.hash(text, algorithm)

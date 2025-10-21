@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const activeTabId = event.target.id;
 
             // Hide all result containers when switching tabs
-            document.querySelectorAll('.result-container').forEach(container => {
+            document.querySelectorAll('.result-container, .bruteforce-result-container, .dictionary-result-container').forEach(container => {
                 container.classList.add('d-none');
             });
         });
@@ -117,6 +117,54 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('#vigenere .result-container').classList.remove('d-none');
 
             showToast('Cifrario di Vigenère elaborato con successo');
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('Si è verificato un errore', true);
+        }
+    });
+
+    // Vigenere Dictionary Attack form
+    const vigenereDictionaryAttackForm = document.getElementById('vigenereDictionaryAttackForm');
+    vigenereDictionaryAttackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const text = document.getElementById('vigenereDictionaryText').value;
+        const dictionary = document.getElementById('vigenereDictionary').value;
+
+        try {
+            const formData = new FormData();
+            formData.append('text', text);
+            formData.append('dictionary', dictionary);
+
+            const response = await fetch(`${API_BASE_URL}/api/vigenere/dictionaryattack`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            const resultsContainer = document.querySelector('.dictionary-result-container');
+            const resultsTableBody = document.getElementById('dictionaryResults');
+            const timeElement = document.getElementById('dictionaryTime');
+
+            timeElement.textContent = `Completato in ${data.total_ms} s`;
+
+            resultsTableBody.innerHTML = '';
+
+            data.results.forEach(result => {
+                const row = document.createElement('tr');
+                const shiftCell = document.createElement('td');
+                shiftCell.textContent = result.key;
+                const textCell = document.createElement('td');
+                textCell.textContent = result.plaintext;
+                row.appendChild(shiftCell);
+                row.appendChild(textCell);
+                resultsTableBody.appendChild(row);
+            });
+
+            resultsContainer.classList.remove('d-none');
+
+            showToast('Simulazione attacco avvenuta con successo');
         } catch (error) {
             console.error('Error:', error);
             showToast('Si è verificato un errore', true);

@@ -185,11 +185,63 @@
                                         <ul class="mb-2">
                                             <li>Ripete la chiave lungo il testo e la applica solo alle lettere (A=0,
                                                 B=1, …, Z=25).</li>
-                                            <li>Cifratura: somma l’offset della chiave; decifratura: lo sottrae.
+                                            <li>Cifratura: somma l'offset della chiave; decifratura: lo sottrae.
                                                 Spazi/punteggiatura restano invariati.</li>
                                         </ul>
-                                        <em>Esempio:</em> testo “ATTACK AT DAWN!”, chiave “LEMON” → “LXFOPV EF RNHR!”.
-                                        Con “Decifrare” e la stessa chiave torni all’originale.
+                                        <em>Esempio:</em> testo "HELLO WORD!", chiave "SECRET" → "ZINCS PGVF!".
+                                        Con "Decifrare" e la stessa chiave torni all'originale.
+                                    </div>
+
+                                    <hr class="my-4">
+                                    <h5 class="card-title">Simulazione Dictionary Attack</h5>
+                                    <div class="alert alert-secondary small mb-2">
+                                        <strong>Perché è insicuro:</strong>
+                                        <ul class="mb-1">
+                                            <li>Se la chiave è una parola del dizionario, può essere trovata rapidamente
+                                                provando tutte le parole comuni.</li>
+                                            <li>Molti utenti scelgono parole semplici o prevedibili come chiavi (nomi,
+                                                date, parole comuni).</li>
+                                            <li>L'attacco a dizionario è efficace quando la chiave non è casuale ma ha
+                                                un significato.</li>
+                                        </ul>
+                                    </div>
+                                    <form id="vigenereDictionaryAttackForm">
+                                        <div class="mb-3">
+                                            <label for="vigenereDictionaryText" class="form-label">Testo cifrato</label>
+                                            <textarea class="form-control" id="vigenereDictionaryText" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="vigenereDictionary" class="form-label">Dizionario (parole
+                                                separate da spazi o ritorni a capo)</label>
+                                            <textarea class="form-control" id="vigenereDictionary" rows="4" required
+                                                placeholder="Inserisci una lista di possibili chiavi separate da spazi o a capo"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            id="vigenereDictionaryBtn">Simula</button>
+                                    </form>
+                                    <div class="dictionary-result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultati Dictionary Attack</span>
+                                                <span class="text-success" id="dictionaryTime"></span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Chiave</th>
+                                                                <th scope="col">Testo decodificato</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="dictionaryResults">
+                                                            <!-- I risultati verranno inseriti qui dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
