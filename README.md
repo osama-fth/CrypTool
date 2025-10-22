@@ -51,66 +51,68 @@ docker compose down -v
 
 Base URL: http://localhost:8080
 
-1) /api/caesar  
-Form fields:
-- text: string
-- shift: int (1–25)
-- decode: bool ("true"/"false")
+### 1. /api/caesar
 
-Esempio:
+**Descrizione:** Cifrario di Cesare: cifratura/decifratura con scorrimento personalizzabile.
 
-```bash
-curl -X POST http://localhost:8080/api/caesar \
-  -F "text=Hello, World! 123" -F "shift=3" -F "decode=false"
-```
+**Parametri:**
+- `text`: string
+- `shift`: int (1–25)
+- `decode`: bool
 
-2) /api/vigenere  
-Form fields:
-- text: string
-- key: string
-- decode: bool
+### 2. /api/vigenere
 
-Esempio:
+**Descrizione:** Cifrario di Vigenère: cifratura/decifratura con chiave.
 
-```bash
-curl -X POST http://localhost:8080/api/vigenere \
-  -F "text=ATTACK AT DAWN!" -F "key=LEMON" -F "decode=false"
-```
+**Parametri:**
+- `text`: string
+- `key`: string
+- `decode`: bool
 
-3) /api/hash  
-Form fields:
-- text: string
-- algorithm: md5 | sha1 | sha256 (default sha256)
+### 3. /api/hash
 
-Esempio:
+**Descrizione:** Calcolo hash per MD5, SHA-1, SHA-256.
 
-```bash
-curl -X POST http://localhost:8080/api/hash \
-  -F "text=hello" -F "algorithm=sha256"
-```
+**Parametri:**
+- `text`: string
+- `algorithm`: md5 | sha1 | sha256 (default sha256)
 
-4) /api/encrypt-file  
-Form fields:
-- file: file binario
-- password: string
+### 4. /api/encrypt-file
 
-Esempio:
+**Descrizione:** Cifratura file con password (AES).
 
-```bash
-curl -X POST http://localhost:8080/api/encrypt-file \
-  -F "file=@/percorso/al/file.pdf" -F "password=Segreta123!" \
-  -o file.pdf.enc
-```
+**Parametri:**
+- `file`: file binario
+- `password`: string
 
-5) /api/decrypt-file  
-Form fields:
-- file: file .enc
-- password: string
+### 5. /api/decrypt-file
 
-Esempio:
+**Descrizione:** Decifratura file con password (AES).
 
-```bash
-curl -X POST http://localhost:8080/api/decrypt-file \
-  -F "file=@file.pdf.enc" -F "password=Segreta123!" \
-  -o file.pdf
-```
+**Parametri:**
+- `file`: file .enc
+- `password`: string
+
+### 6. /api/caesar/bruteforce
+
+**Descrizione:** Simula un attacco brute force sul Cifrario di Cesare.
+
+**Parametri:**
+- `ciphertext`: string
+
+### 7. /api/vigenere/dictionaryattack
+
+**Descrizione:** Simula un dictionary attack sul Cifrario di Vigenere.
+
+**Parametri:**
+- `text`: string (testo cifrato)
+- `dictionary`: string (parole separate da spazi, virgole o a capo)
+
+### 8. /api/hash/dictionaryattack
+
+**Descrizione:** Ricerca per dizionario un testo che produca l’hash dato (per MD5/SHA-1/SHA-256).
+
+**Parametri:**
+- `hash`: string
+- `algorithm`: md5 | sha1 | sha256 (default sha256)
+- `dictionary`: string (parole separate da spazi, virgole o a capo)
