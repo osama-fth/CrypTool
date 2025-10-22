@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -18,205 +20,394 @@
         </div>
     </nav>
 
-<main>
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-12 mb-4">
-                <div class="card">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="cryptoTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="caesar-tab" data-bs-toggle="tab" data-bs-target="#caesar" type="button" role="tab">Cifrario di Cesare</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="vigenere-tab" data-bs-toggle="tab" data-bs-target="#vigenere" type="button" role="tab">Cifrario di Vigenere</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="hash-tab" data-bs-toggle="tab" data-bs-target="#hash" type="button" role="tab">Hash</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="aes-tab" data-bs-toggle="tab" data-bs-target="#aes" type="button" role="tab">Cifratura File (AES)</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="cryptoTabContent">
-                            <!-- Caesar Cipher -->
-                            <div class="tab-pane fade show active" id="caesar" role="tabpanel">
-                                <h5 class="card-title">Cifrario di Cesare</h5>
-                                <form id="caesarForm">
-                                    <div class="mb-3">
-                                        <label for="caesarText" class="form-label">Testo</label>
-                                        <textarea class="form-control" id="caesarText" rows="3" required></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="caesarShift" class="form-label">Scorrimento</label>
-                                        <input type="number" class="form-control" id="caesarShift" value="3" min="1" max="25" required>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" id="caesarDecode">
-                                        <label class="form-check-label" for="caesarDecode">
-                                            Decifrare
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Elabora</button>
-                                </form>
-                                <div class="result-container mt-3 d-none">
-                                    <div class="card bg-light">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Risultato</span>
-                                            <button class="btn btn-sm btn-outline-secondary copy-btn" data-result-id="caesarResult">
-                                                <i class="bi bi-clipboard"></i> Copia
-                                            </button>
+    <main>
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="cryptoTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="caesar-tab" data-bs-toggle="tab"
+                                        data-bs-target="#caesar" type="button" role="tab">Cifrario di Cesare</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="vigenere-tab" data-bs-toggle="tab"
+                                        data-bs-target="#vigenere" type="button" role="tab">Cifrario di
+                                        Vigenere</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="hash-tab" data-bs-toggle="tab" data-bs-target="#hash"
+                                        type="button" role="tab">Hash</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="aes-tab" data-bs-toggle="tab" data-bs-target="#aes"
+                                        type="button" role="tab">Cifratura File (AES)</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="cryptoTabContent">
+                                <!-- Caesar Cipher -->
+                                <div class="tab-pane fade show active" id="caesar" role="tabpanel">
+                                    <h5 class="card-title">Cifrario di Cesare</h5>
+                                    <form id="caesarForm">
+                                        <div class="mb-3">
+                                            <label for="caesarText" class="form-label">Testo</label>
+                                            <textarea class="form-control" id="caesarText" rows="3" required></textarea>
                                         </div>
-                                        <div class="card-body">
-                                            <pre class="mb-0" id="caesarResult"></pre>
+                                        <div class="mb-3">
+                                            <label for="caesarShift" class="form-label">Scorrimento</label>
+                                            <input type="number" class="form-control" id="caesarShift" value="3" min="1"
+                                                max="25" required>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="caesarDecode">
+                                            <label class="form-check-label" for="caesarDecode">
+                                                Decifrare
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Elabora</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultato</span>
+                                                <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                    data-result-id="caesarResult">
+                                                    <i class="bi bi-clipboard"></i> Copia
+                                                </button>
+                                            </div>
+                                            <div class="card-body">
+                                                <pre class="mb-0" id="caesarResult"></pre>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <hr class="my-4">
-                                <div class="alert alert-secondary small mb-0">
-                                    <strong>Come funziona:</strong>
-                                    <ul class="mb-2">
-                                        <li>Sposta ogni lettera di N posizioni nell’alfabeto (mod 26).</li>
-                                        <li>Mantiene maiuscole/minuscole; numeri, spazi e punteggiatura non cambiano.</li>
-                                    </ul>
-                                    <em>Esempio:</em> “Ciao, mondo!” con scorrimento 5 → “Hnft, rtsit!”. Con “Decifrare” torni al testo iniziale.
-                                </div>
-                            </div>
+                                    <hr class="my-2">
+                                    <div class="alert alert-secondary small mb-0">
+                                        <strong>Come funziona:</strong>
+                                        <ul class="mb-2">
+                                            <li>Sposta ogni lettera di N posizioni nell’alfabeto (mod 26).</li>
+                                            <li>Mantiene maiuscole/minuscole; numeri, spazi e punteggiatura non
+                                                cambiano.</li>
+                                        </ul>
+                                        <em>Esempio:</em> “Ciao, mondo!” con scorrimento 5 → “Hnft, rtsit!”. Con
+                                        “Decifrare” torni al testo iniziale.
+                                    </div>
 
-                            <!-- Vigenere Cipher -->
-                            <div class="tab-pane fade" id="vigenere" role="tabpanel">
-                                <h5 class="card-title">Cifrario di Vigenere</h5>
-                                <form id="vigenereForm">
-                                    <div class="mb-3">
-                                        <label for="vigenereText" class="form-label">Testo</label>
-                                        <textarea class="form-control" id="vigenereText" rows="3" required></textarea>
+                                    <hr class="my-4">
+                                    <h5 class="card-title">Simulazione Attacco Bruteforce</h5>
+                                    <div class="alert alert-secondary small mb-2">
+                                        <strong>Perché è insicuro:</strong>
+                                        <ul class="mb-1">
+                                            <li>Esistono solo 25 chiavi possibili → si può provare tutte in pochi
+                                                secondi (brute force).</li>
+                                            <li>La struttura del messaggio resta leggibile: lettere frequenti restano
+                                                frequenti.</li>
+                                            <li>Chiunque può decifrare anche senza conoscere la chiave, solo osservando
+                                                il testo cifrato.</li>
+                                        </ul>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="vigenereKey" class="form-label">Chiave</label>
-                                        <input type="text" class="form-control" id="vigenereKey" required>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" id="vigenereDecode">
-                                        <label class="form-check-label" for="vigenereDecode">
-                                            Decifrare
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Elabora</button>
-                                </form>
-                                <div class="result-container mt-3 d-none">
-                                    <div class="card bg-light">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Risultato</span>
-                                            <button class="btn btn-sm btn-outline-secondary copy-btn" data-result-id="vigenereResult">
-                                                <i class="bi bi-clipboard"></i> Copia
-                                            </button>
-                                        </div>
-                                        <div class="card-body">
-                                            <pre class="mb-0" id="vigenereResult"></pre>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <hr class="my-4">
-                                <div class="alert alert-secondary small mb-0">
-                                    <strong>Come funziona:</strong>
-                                    <ul class="mb-2">
-                                        <li>Ripete la chiave lungo il testo e la applica solo alle lettere (A=0, B=1, …, Z=25).</li>
-                                        <li>Cifratura: somma l’offset della chiave; decifratura: lo sottrae. Spazi/punteggiatura restano invariati.</li>
-                                    </ul>
-                                    <em>Esempio:</em> testo “ATTACK AT DAWN!”, chiave “LEMON” → “LXFOPV EF RNHR!”. Con “Decifrare” e la stessa chiave torni all’originale.
-                                </div>
-                            </div>
-
-                            <!-- Hash -->
-                            <div class="tab-pane fade" id="hash" role="tabpanel">
-                                <h5 class="card-title">Hash</h5>
-                                <form id="hashForm">
-                                    <div class="mb-3">
-                                        <label for="hashText" class="form-label">Testo</label>
-                                        <textarea class="form-control" id="hashText" rows="3" required></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="hashAlgorithm" class="form-label">Algoritmo</label>
-                                        <select class="form-select" id="hashAlgorithm">
-                                            <option value="sha256" selected>SHA-256</option>
-                                            <option value="sha1">SHA-1</option>
-                                            <option value="md5">MD5</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Calcola Hash</button>
-                                </form>
-                                <div class="result-container mt-3 d-none">
-                                    <div class="card bg-light">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <span>Risultato</span>
-                                            <button class="btn btn-sm btn-outline-secondary copy-btn" data-result-id="hashResult">
-                                                <i class="bi bi-clipboard"></i> Copia
-                                            </button>
+                                    <form id="caesarBruteforceForm">
+                                        <div class="mb-3">
+                                            <label for="caesarBruteforceText" class="form-label">Testo</label>
+                                            <textarea class="form-control" id="caesarBruteforceText" rows="3"
+                                                required></textarea>
                                         </div>
-                                        <div class="card-body">
-                                            <pre class="mb-0" id="hashResult"></pre>
+                                        <button type="submit" class="btn btn-primary">Simula</button>
+                                    </form>
+                                    <div class="bruteforce-result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultati Bruteforce</span>
+                                                <span class="text-success" id="bruteforceTime"></span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Scorrimento</th>
+                                                                <th scope="col">Testo decodificato</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="bruteforceResults">
+                                                            <!-- I risultati verranno inseriti qui dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <hr class="my-4">
-                                <div class="alert alert-secondary small mb-0">
-                                    <strong>Come funziona:</strong>
-                                    <ul class="mb-2">
-                                        <li>Funzione deterministica e non reversibile che produce una lunghezza fissa (es. SHA-256 = 64 hex).</li>
-                                        <li>Piccole variazioni nel testo cambiano drasticamente l’output. Evita MD5/SHA-1 per sicurezza; preferisci SHA-256.</li>
-                                        <li>Per le password usa funzioni dedicate (PBKDF2, bcrypt, scrypt, Argon2) con sale.</li>
-                                    </ul>
-                                    <em>Esempi:</em> SHA-256(“hello”) → 
-                                    <code class="text-break d-block">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b982</code>
-                                    SHA-256(“Hello”) → 
-                                    <code class="text-break d-block">185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</code>
+                                <!-- Vigenere Cipher -->
+                                <div class="tab-pane fade" id="vigenere" role="tabpanel">
+                                    <h5 class="card-title">Cifrario di Vigenere</h5>
+                                    <form id="vigenereForm">
+                                        <div class="mb-3">
+                                            <label for="vigenereText" class="form-label">Testo</label>
+                                            <textarea class="form-control" id="vigenereText" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="vigenereKey" class="form-label">Chiave</label>
+                                            <input type="text" class="form-control" id="vigenereKey" required>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="checkbox" id="vigenereDecode">
+                                            <label class="form-check-label" for="vigenereDecode">
+                                                Decifrare
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Elabora</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultato</span>
+                                                <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                    data-result-id="vigenereResult">
+                                                    <i class="bi bi-clipboard"></i> Copia
+                                                </button>
+                                            </div>
+                                            <div class="card-body">
+                                                <pre class="mb-0" id="vigenereResult"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+                                    <div class="alert alert-secondary small mb-0">
+                                        <strong>Come funziona:</strong>
+                                        <ul class="mb-2">
+                                            <li>Ripete la chiave lungo il testo e la applica solo alle lettere (A=0,
+                                                B=1, …, Z=25).</li>
+                                            <li>Cifratura: somma l'offset della chiave; decifratura: lo sottrae.
+                                                Spazi/punteggiatura restano invariati.</li>
+                                        </ul>
+                                        <em>Esempio:</em> testo "HELLO WORD!", chiave "SECRET" → "ZINCS PGVF!".
+                                        Con "Decifrare" e la stessa chiave torni all'originale.
+                                    </div>
+
+                                    <hr class="my-4">
+                                    <h5 class="card-title">Simulazione Dictionary Attack</h5>
+                                    <div class="alert alert-secondary small mb-2">
+                                        <strong>Perché è insicuro:</strong>
+                                        <ul class="mb-1">
+                                            <li>Se la chiave è una parola del dizionario, può essere trovata rapidamente
+                                                provando tutte le parole comuni.</li>
+                                            <li>Molti utenti scelgono parole semplici o prevedibili come chiavi (nomi,
+                                                date, parole comuni).</li>
+                                            <li>L'attacco a dizionario è efficace quando la chiave non è casuale ma ha
+                                                un significato.</li>
+                                        </ul>
+                                    </div>
+                                    <form id="vigenereDictionaryAttackForm">
+                                        <div class="mb-3">
+                                            <label for="vigenereDictionaryText" class="form-label">Testo cifrato</label>
+                                            <textarea class="form-control" id="vigenereDictionaryText" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="vigenereDictionary" class="form-label">Dizionario (parole
+                                                separate da spazi o ritorni a capo)</label>
+                                            <textarea class="form-control" id="vigenereDictionary" rows="4" required
+                                                placeholder="Inserisci una lista di possibili chiavi separate da spazi o a capo"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            id="vigenereDictionaryBtn">Simula</button>
+                                    </form>
+                                    <div class="dictionary-result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultati Dictionary Attack</span>
+                                                <span class="text-success" id="dictionaryTime"></span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Chiave</th>
+                                                                <th scope="col">Testo decodificato</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="dictionaryResults">
+                                                            <!-- I risultati verranno inseriti qui dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <!-- AES File Encryption -->
-                            <div class="tab-pane fade" id="aes" role="tabpanel">
-                                <h5 class="card-title">Cifratura File (AES)</h5>
-                                <form id="encryptFileForm" class="mb-4">
-                                    <div class="mb-3">
-                                        <label for="encryptFile" class="form-label">File da cifrare</label>
-                                        <input class="form-control" type="file" id="encryptFile" required>
+                                <!-- Hash -->
+                                <div class="tab-pane fade" id="hash" role="tabpanel">
+                                    <h5 class="card-title">Hash</h5>
+                                    <form id="hashForm">
+                                        <div class="mb-3">
+                                            <label for="hashText" class="form-label">Testo</label>
+                                            <textarea class="form-control" id="hashText" rows="3" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hashAlgorithm" class="form-label">Algoritmo</label>
+                                            <select class="form-select" id="hashAlgorithm">
+                                                <option value="sha256" selected>SHA-256</option>
+                                                <option value="sha1">SHA-1</option>
+                                                <option value="md5">MD5</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Calcola Hash</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultato</span>
+                                                <button class="btn btn-sm btn-outline-secondary copy-btn"
+                                                    data-result-id="hashResult">
+                                                    <i class="bi bi-clipboard"></i> Copia
+                                                </button>
+                                            </div>
+                                            <div class="card-body">
+                                                <pre class="mb-0" id="hashResult"></pre>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="encryptPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="encryptPassword" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Cifra File</button>
-                                </form>
-                                
-                                <hr>
-                                
-                                <h5 class="card-title">Decifratura File</h5>
-                                <form id="decryptFileForm">
-                                    <div class="mb-3">
-                                        <label for="decryptFile" class="form-label">File da decifrare</label>
-                                        <input class="form-control" type="file" id="decryptFile" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="decryptPassword" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="decryptPassword" required>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Decifra File</button>
-                                </form>
 
-                                <hr class="my-4">
-                                <div class="alert alert-secondary small mb-0">
-                                    <strong>Come funziona:</strong>
-                                    <ul class="mb-2">
-                                        <li>Deriva una chiave dalla password con un sale casuale (es. PBKDF2/scrypt) e cifra con AES in modalità sicura (es. GCM o CBC+HMAC).</li>
-                                        <li>Usa un IV/nonce casuale per ogni cifratura; nel file cifrato vengono salvati sale/IV insieme ai dati.</li>
-                                        <li>Per decifrare servono file cifrato e stessa password; password errata → errore o contenuto illeggibile.</li>
-                                    </ul>
-                                    <em>Esempio:</em> “documento.pdf” + password “Segreta123!” → “documento.pdf.enc”. Per recuperarlo, carica “.enc” e usa la stessa password.
+                                    <hr class="my-4">
+                                    <div class="alert alert-secondary small mb-0">
+                                        <strong>Come funziona:</strong>
+                                        <ul class="mb-2">
+                                            <li>Funzione deterministica e non reversibile che produce una lunghezza
+                                                fissa (es. SHA-256 = 64 hex).</li>
+                                            <li>Piccole variazioni nel testo cambiano drasticamente l’output. Evita
+                                                MD5/SHA-1 per sicurezza; preferisci SHA-256.</li>
+                                            <li>Per le password usa funzioni dedicate (PBKDF2, bcrypt, scrypt, Argon2)
+                                                con sale.</li>
+                                        </ul>
+                                        <em>Esempi:</em> SHA-256(“hello”) →
+                                        <code
+                                            class="text-break d-block">2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b982</code>
+                                        SHA-256(“Hello”) →
+                                        <code
+                                            class="text-break d-block">185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</code>
+                                    </div>
+
+                                    <hr class="my-4">
+                                    <h5 class="card-title">Simulazione Dictionary Attack</h5>
+                                    <div class="alert alert-secondary small mb-2">
+                                        <strong>Perché gli hash semplici sono insicuri per le password:</strong>
+                                        <ul class="mb-1">
+                                            <li><strong>Hash senza sale:</strong> Lo stesso testo produce sempre lo
+                                                stesso hash, permettendo attacchi con tabelle precalcolate (rainbow
+                                                tables).</li>
+                                            <li><strong>Calcolo veloce:</strong> Gli algoritmi standard (SHA, MD5) sono
+                                                ottimizzati per la velocità, non per la sicurezza delle password.</li>
+                                            <li><strong>Attacchi in parallelo:</strong> Usando GPU/hardware
+                                                specializzato si possono calcolare miliardi di hash al secondo.</li>
+                                            <li><strong>Soluzione:</strong> Usare algoritmi specifici per password
+                                                (bcrypt, Argon2) che incorporano sale unico e fattori di lavoro
+                                                regolabili.</li>
+                                        </ul>
+                                    </div>
+
+                                    <form id="hashDictionaryAttackForm">
+                                        <div class="mb-3">
+                                            <label for="hashDictionaryText" class="form-label">Hash</label>
+                                            <textarea class="form-control" id="hashDictionaryText" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hashDictionaryAttackAlgorithm"
+                                                class="form-label">Algoritmo</label>
+                                            <select class="form-select" id="hashDictionaryAttackAlgorithm">
+                                                <option value="sha256" selected>SHA-256</option>
+                                                <option value="sha1">SHA-1</option>
+                                                <option value="md5">MD5</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hashDictionary" class="form-label">Dizionario (parole
+                                                separate da spazi o ritorni a capo)</label>
+                                            <textarea class="form-control" id="hashDictionary" rows="4" required
+                                                placeholder="Inserisci una lista di possibili chiavi separate da spazi o a capo"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            id="hashDictionaryBtn">Simula</button>
+                                    </form>
+                                    <div class="hash-dictionary-result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultati Dictionary Attack</span>
+                                                <span class="text-success" id="hashDictionaryTime"></span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Testo</th>
+                                                                <th scope="col">hash</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="hashDictionaryResults">
+                                                            <!-- I risultati verranno inseriti qui dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- AES File Encryption -->
+                                <div class="tab-pane fade" id="aes" role="tabpanel">
+                                    <h5 class="card-title">Cifratura File (AES)</h5>
+                                    <form id="encryptFileForm" class="mb-4">
+                                        <div class="mb-3">
+                                            <label for="encryptFile" class="form-label">File da cifrare</label>
+                                            <input class="form-control" type="file" id="encryptFile" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="encryptPassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="encryptPassword" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Cifra File</button>
+                                    </form>
+
+                                    <hr>
+
+                                    <h5 class="card-title">Decifratura File</h5>
+                                    <form id="decryptFileForm">
+                                        <div class="mb-3">
+                                            <label for="decryptFile" class="form-label">File da decifrare</label>
+                                            <input class="form-control" type="file" id="decryptFile" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="decryptPassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="decryptPassword" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Decifra File</button>
+                                    </form>
+
+                                    <hr class="my-4">
+                                    <div class="alert alert-secondary small mb-0">
+                                        <strong>Come funziona:</strong>
+                                        <ul class="mb-2">
+                                            <li>Deriva una chiave dalla password con un sale casuale (es. PBKDF2/scrypt)
+                                                e cifra con AES in modalità sicura (es. GCM o CBC+HMAC).</li>
+                                            <li>Usa un IV/nonce casuale per ogni cifratura; nel file cifrato vengono
+                                                salvati sale/IV insieme ai dati.</li>
+                                            <li>Per decifrare servono file cifrato e stessa password; password errata →
+                                                errore o contenuto illeggibile.</li>
+                                        </ul>
+                                        <em>Esempio:</em> “documento.pdf” + password “Segreta123!” →
+                                        “documento.pdf.enc”. Per recuperarlo, carica “.enc” e usa la stessa password.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,14 +415,13 @@
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<footer class="bg-light text-center py-3">
-    <div class="container">
-        <small class="text-muted">CrypTool | Un semplice strumento di crittografia</small>
-    </div>
-</footer>
+    <footer class="bg-light text-center py-3">
+        <div class="container">
+            <small class="text-muted">CrypTool | Un semplice strumento di crittografia</small>
+        </div>
+    </footer>
 
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="resultToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -248,4 +438,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
