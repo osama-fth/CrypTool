@@ -296,6 +296,72 @@
                                         <code
                                             class="text-break d-block">185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969</code>
                                     </div>
+
+                                    <hr class="my-4">
+                                    <h5 class="card-title">Simulazione Dictionary Attack</h5>
+                                    <div class="alert alert-secondary small mb-2">
+                                        <strong>Perché gli hash semplici sono insicuri per le password:</strong>
+                                        <ul class="mb-1">
+                                            <li><strong>Hash senza sale:</strong> Lo stesso testo produce sempre lo
+                                                stesso hash, permettendo attacchi con tabelle precalcolate (rainbow
+                                                tables).</li>
+                                            <li><strong>Calcolo veloce:</strong> Gli algoritmi standard (SHA, MD5) sono
+                                                ottimizzati per la velocità, non per la sicurezza delle password.</li>
+                                            <li><strong>Attacchi in parallelo:</strong> Usando GPU/hardware
+                                                specializzato si possono calcolare miliardi di hash al secondo.</li>
+                                            <li><strong>Soluzione:</strong> Usare algoritmi specifici per password
+                                                (bcrypt, Argon2) che incorporano sale unico e fattori di lavoro
+                                                regolabili.</li>
+                                        </ul>
+                                    </div>
+
+                                    <form id="hashDictionaryAttackForm">
+                                        <div class="mb-3">
+                                            <label for="hashDictionaryText" class="form-label">Hash</label>
+                                            <textarea class="form-control" id="hashDictionaryText" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hashDictionaryAttackAlgorithm"
+                                                class="form-label">Algoritmo</label>
+                                            <select class="form-select" id="hashDictionaryAttackAlgorithm">
+                                                <option value="sha256" selected>SHA-256</option>
+                                                <option value="sha1">SHA-1</option>
+                                                <option value="md5">MD5</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="hashDictionary" class="form-label">Dizionario (parole
+                                                separate da spazi o ritorni a capo)</label>
+                                            <textarea class="form-control" id="hashDictionary" rows="4" required
+                                                placeholder="Inserisci una lista di possibili chiavi separate da spazi o a capo"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                            id="hashDictionaryBtn">Simula</button>
+                                    </form>
+                                    <div class="hash-dictionary-result-container mt-3 d-none">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Risultati Dictionary Attack</span>
+                                                <span class="text-success" id="hashDictionaryTime"></span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Testo</th>
+                                                                <th scope="col">hash</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="hashDictionaryResults">
+                                                            <!-- I risultati verranno inseriti qui dinamicamente -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- AES File Encryption -->

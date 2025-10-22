@@ -200,6 +200,66 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Hash Dictionary Attack form
+    const hashDictionaryAttackForm = document.getElementById('hashDictionaryAttackForm');
+    hashDictionaryAttackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const hash = document.getElementById('hashDictionaryText').value.trim();
+        const algorithm = document.getElementById('hashDictionaryAttackAlgorithm').value;
+        const dictionary = document.getElementById('hashDictionary').value;
+
+        try {
+            const formData = new FormData();
+            formData.append('hash', hash);
+            formData.append('algorithm', algorithm);
+            formData.append('dictionary', dictionary);
+
+            const response = await fetch(`${API_BASE_URL}/api/hash/dictionaryattack`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            const resultsContainer = document.querySelector('.hash-dictionary-result-container');
+            const resultsTableBody = document.getElementById('hashDictionaryResults');
+            const timeElement = document.getElementById('hashDictionaryTime');
+
+            timeElement.textContent = `Completato in ${data.total_ms} s`;
+
+            resultsTableBody.innerHTML = '';
+
+            if (data.results.length === 0) {
+                const row = document.createElement('tr');
+                const messageCell = document.createElement('td');
+                messageCell.textContent = 'Nessuna corrispondenza trovata';
+                messageCell.colSpan = 2;
+                messageCell.className = 'text-center';
+                row.appendChild(messageCell);
+                resultsTableBody.appendChild(row);
+            } else {
+                data.results.forEach(result => {
+                    const row = document.createElement('tr');
+                    const textCell = document.createElement('td');
+                    textCell.textContent = result.text;
+                    const hashCell = document.createElement('td');
+                    hashCell.textContent = result.hash;
+                    row.appendChild(textCell);
+                    row.appendChild(hashCell);
+                    resultsTableBody.appendChild(row);
+                });
+            }
+
+            resultsContainer.classList.remove('d-none');
+
+            showToast('Simulazione attacco avvenuta con successo');
+        } catch (error) {
+            console.error('Error:', error);
+            showToast('Si è verificato un errore', true);
+        }
+    });
+
     // File encryption
     const encryptFileForm = document.getElementById('encryptFileForm');
     encryptFileForm.addEventListener('submit', async (e) => {

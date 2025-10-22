@@ -9,7 +9,7 @@ app = FastAPI(title="CrypTool API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://0.0.0.0:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -54,6 +54,21 @@ async def vigenere_dictionary_attack(text: str = Form(...), dictionary: str = Fo
 async def hash_api(text: str = Form(...), algorithm: str = Form("sha256")):
     result = hashutils.hash(text, algorithm)
     return {"result": result}
+
+@app.post("/api/hash/dictionaryattack")
+async def hash_dictionary_attack(hash: str = Form(...), algorithm: str = Form("sha256"), dictionary: str = Form(...)):
+    start = time.perf_counter()
+    results = []
+    
+    words = list(set([word.strip() for word in dictionary.replace(",", " ").replace("\n", " ").split() if word.strip()]))
+    
+    for key in words:
+        if (hashutils.hash(key, algorithm) == hash):
+            results.append({"text": key, "hash": hash})
+            break
+           
+    total_ms = round((time.perf_counter() - start), 6)  
+    return {"total_ms": total_ms, "results": results}
 
 @app.post("/api/encrypt-file")
 async def encrypt_file(file: UploadFile = File(...), password: str = Form(...)):
