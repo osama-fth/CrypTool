@@ -340,23 +340,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Copy to clipboard functionality
-    document.querySelectorAll('.copy-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const resultId = btn.getAttribute('data-result-id');
-            const resultText = document.getElementById(resultId).textContent;
-
-            navigator.clipboard.writeText(resultText)
-                .then(() => {
-                    showToast('Testo copiato negli appunti');
-                })
-                .catch(err => {
-                    console.error('Error copying text: ', err);
-                    showToast('Errore durante la copia', true);
-                });
-        });
-    });
-
     // Toast notification helper
     function showToast(message, isError = false) {
         const toast = document.getElementById('resultToast');

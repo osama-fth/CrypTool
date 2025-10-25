@@ -2,9 +2,8 @@
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Bootstrap 5](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
-[![OpenAPI](https://img.shields.io/badge/OpenAPI-3.0-6BA539?logo=openapiinitiative&logoColor=white)](http://localhost:8080/docs)
-[![Swagger UI](https://img.shields.io/badge/Swagger%20UI-85EA2D?logo=swagger&logoColor=black)](http://localhost:8080/docs)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docs.docker.com)
+[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 
 Applicazione web semplice per operazioni crittografiche di base, composta da un backend FastAPI e un frontend statico Bootstrap.  
 - Backend: FastAPI, vedi [backend/app.py](backend/app.py) ⚙️  
@@ -41,7 +40,7 @@ Arresto:
 docker compose down
 ```
 
-Arresto con rimozione:
+Arresto con rimozione volumi:
 
 ```bash
 docker compose down -v
