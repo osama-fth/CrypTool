@@ -43,6 +43,10 @@
                                     <button class="nav-link" id="aes-tab" data-bs-toggle="tab" data-bs-target="#aes"
                                         type="button" role="tab">Cifratura File (AES)</button>
                                 </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="rsa-tab" data-bs-toggle="tab" data-bs-target="#rsa"
+                                        type="button" role="tab">RSA</button>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -376,6 +380,96 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary">Decifra File</button>
                                     </form>
+                                </div>
+                                <!-- RSA -->
+                                <div class="tab-pane fade" id="rsa" role="tabpanel">
+                                    <h5 class="card-title">RSA</h5>
+                                    <div class="alert alert-secondary small mb-1">
+                                        <strong>Come funziona:</strong>
+                                        <ul class="mb-2">
+                                            <li>Genera una coppia di chiavi: <em>pubblica</em> (per cifrare/verificare) e <em>privata</em> (per decifrare/firmare).</li>
+                                            <li>La sicurezza dipende dalla dimensione della chiave: consigliato almeno 2048 bit.</li>
+                                            <li>Non cifrare file grandi direttamente con RSA: cifrare una chiave simmetrica (ibrido) è la pratica comune.</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Generazione chiavi -->
+                                    <form id="rsaKeygenForm" class="mb-4">
+                                        <div class="mb-3">
+                                            <label for="rsaKeySize" class="form-label">Dimensione chiave</label>
+                                            <select class="form-select" id="rsaKeySize" required>
+                                                <option value="1024">1024</option>
+                                                <option value="2048" selected>2048</option>
+                                                <option value="4096">4096</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Genera chiavi</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none" id="rsaKeygenResultContainer">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Chiavi generate</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <label class="form-label">Chiave pubblica</label>
+                                                <pre class="mb-3" id="rsaPublicKeyResult"></pre>
+                                                <label class="form-label">Chiave privata</label>
+                                                <pre class="mb-0" id="rsaPrivateKeyResult"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <!-- Cifratura -->
+                                    <h5 class="card-title">Cifratura</h5>
+                                    <form id="rsaEncryptForm" class="mb-3">
+                                        <div class="mb-3">
+                                            <label for="rsaPublicKey" class="form-label">Chiave pubblica</label>
+                                            <textarea class="form-control" id="rsaPublicKey" rows="5" placeholder="Incolla qui la chiave pubblica PEM" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="rsaPlaintext" class="form-label">Messaggio</label>
+                                            <textarea class="form-control" id="rsaPlaintext" rows="3" placeholder="Testo da cifrare" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Cripta</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none" id="rsaEncryptResultContainer">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Testo cifrato</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <pre class="mb-0" id="rsaEncryptResult"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <!-- Decifratura -->
+                                    <h5 class="card-title">Decifratura</h5>
+                                    <form id="rsaDecryptForm" class="mb-3">
+                                        <div class="mb-3">
+                                            <label for="rsaPrivateKey" class="form-label">Chiave privata</label>
+                                            <textarea class="form-control" id="rsaPrivateKey" rows="7" placeholder="Incolla qui la chiave privata PEM" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="rsaCiphertext" class="form-label">Testo cifrato</label>
+                                            <textarea class="form-control" id="rsaCiphertext" rows="4" placeholder="Incolla qui il testo cifrato" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Decripta</button>
+                                    </form>
+                                    <div class="result-container mt-3 d-none" id="rsaDecryptResultContainer">
+                                        <div class="card bg-light">
+                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                <span>Testo in chiaro</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <pre class="mb-0" id="rsaDecryptResult"></pre>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

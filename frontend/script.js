@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const activeTabId = event.target.id;
 
             // Hide all result containers when switching tabs
-            document.querySelectorAll('.result-container, .bruteforce-result-container, .dictionary-result-container').forEach(container => {
+            document.querySelectorAll('.result-container, .bruteforce-result-container, .dictionary-result-container, .hash-dictionary-result-container').forEach(container => {
                 container.classList.add('d-none');
             });
         });
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // File encryption
+    // File aes encryption
     const encryptFileForm = document.getElementById('encryptFileForm');
     encryptFileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -278,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('file', file);
             formData.append('password', password);
 
-            const response = await fetch(`${API_BASE_URL}/api/encrypt-file`, {
+            const response = await fetch(`${API_BASE_URL}/api/aes/encrypt-file`, {
                 method: 'POST',
                 body: formData
             });
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // File decryption
+    // File aes decryption
     const decryptFileForm = document.getElementById('decryptFileForm');
     decryptFileForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('file', file);
             formData.append('password', password);
 
-            const response = await fetch(`${API_BASE_URL}/api/decrypt-file`, {
+            const response = await fetch(`${API_BASE_URL}/api/aes/decrypt-file`, {
                 method: 'POST',
                 body: formData
             });
@@ -339,6 +339,100 @@ document.addEventListener('DOMContentLoaded', function () {
             showToast('Si è verificato un errore durante la decifratura', true);
         }
     });
+
+    // RSA: generazione chiavi
+    const rsaKeygenForm = document.getElementById('rsaKeygenForm');
+    if (rsaKeygenForm) {
+        rsaKeygenForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const keySize = document.getElementById('rsaKeySize').value;
+
+            try {
+                const formData = new FormData();
+                formData.append('key_size', keySize);
+
+                const response = await fetch(`${API_BASE_URL}/api/rsa/generate`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                document.getElementById('rsaPublicKeyResult').textContent = data.public_key || '';
+                document.getElementById('rsaPrivateKeyResult').textContent = data.private_key || '';
+                document.getElementById('rsaKeygenResultContainer').classList.remove('d-none');
+
+                showToast('Chiavi RSA generate con successo');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Errore durante la generazione delle chiavi', true);
+            }
+        });
+    }
+
+    // RSA: cifratura
+    const rsaEncryptForm = document.getElementById('rsaEncryptForm');
+    if (rsaEncryptForm) {
+        rsaEncryptForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const publicKey = document.getElementById('rsaPublicKey').value.trim();
+            const message = document.getElementById('rsaPlaintext').value;
+
+            try {
+                const formData = new FormData();
+                formData.append('public_key', publicKey);
+                formData.append('message', message);
+
+                const response = await fetch(`${API_BASE_URL}/api/rsa/encrypt`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                document.getElementById('rsaEncryptResult').textContent = data.ciphertext || '';
+                document.getElementById('rsaEncryptResultContainer').classList.remove('d-none');
+
+                showToast('Testo cifrato con successo');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Errore durante la cifratura', true);
+            }
+        });
+    }
+
+    // RSA: decifratura
+    const rsaDecryptForm = document.getElementById('rsaDecryptForm');
+    if (rsaDecryptForm) {
+        rsaDecryptForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const privateKey = document.getElementById('rsaPrivateKey').value.trim();
+            const ciphertext = document.getElementById('rsaCiphertext').value;
+
+            try {
+                const formData = new FormData();
+                formData.append('private_key', privateKey);
+                formData.append('ciphertext', ciphertext);
+
+                const response = await fetch(`${API_BASE_URL}/api/rsa/decrypt`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                document.getElementById('rsaDecryptResult').textContent = data.plaintext || '';
+                document.getElementById('rsaDecryptResultContainer').classList.remove('d-none');
+
+                showToast('Testo decifrato con successo');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Errore durante la decifratura', true);
+            }
+        });
+    }
 
     // Toast notification helper
     function showToast(message, isError = false) {

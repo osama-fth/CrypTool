@@ -16,6 +16,7 @@ Applicazione web semplice per operazioni crittografiche di base, composta da un 
 - Cifrario di Vigenère: cifratura/decifratura con chiave 🔑
 - Hash: MD5, SHA-1, SHA-256 🧮
 - Cifratura/Decifratura file con password (AES) 🗂️🔐
+- RSA: generazione chiavi, cifratura e decifratura 🔐🗝️
 
 ## Requisiti 🧰
 
@@ -76,7 +77,7 @@ Base URL: http://localhost:8080
 - `text`: string
 - `algorithm`: md5 | sha1 | sha256 (default sha256)
 
-### 4. /api/encrypt-file
+### 4. /api/aes/encrypt-file
 
 **Descrizione:** Cifratura file con password (AES).
 
@@ -84,7 +85,7 @@ Base URL: http://localhost:8080
 - `file`: file binario
 - `password`: string
 
-### 5. /api/decrypt-file
+### 5. /api/aes/decrypt-file
 
 **Descrizione:** Decifratura file con password (AES).
 
@@ -115,3 +116,36 @@ Base URL: http://localhost:8080
 - `hash`: string
 - `algorithm`: md5 | sha1 | sha256 (default sha256)
 - `dictionary`: string (parole separate da spazi, virgole o a capo)
+
+### 9. /api/rsa/generate
+
+**Descrizione:** Genera una coppia di chiavi RSA (privata e pubblica).
+
+**Parametri:**
+- `key_size`: int (default 2048; es. 1024, 2048, 4096)
+
+**Risposta:**
+- `private_key`: string (PEM)
+- `public_key`: string (PEM)
+
+### 10. /api/rsa/encrypt
+
+**Descrizione:** Cifra un messaggio con la chiave pubblica RSA.
+
+**Parametri:**
+- `public_key`: string (PEM)
+- `message`: string
+
+**Risposta:**
+- `ciphertext`: string
+
+### 11. /api/rsa/decrypt
+
+**Descrizione:** Decifra un ciphertext con la chiave privata RSA.
+
+**Parametri:**
+- `private_key`: string (PEM)
+- `ciphertext`: string
+
+**Risposta:**
+- `plaintext`: string

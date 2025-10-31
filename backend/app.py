@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Form, UploadFile, File, Body
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from crypto_utils import caesar, vigenere, hashutils, aes_file
+from crypto_utils import caesar, vigenere, hashutils, aes_file, rsa
 import io
 import time
 
@@ -70,7 +70,7 @@ async def hash_dictionary_attack(hash: str = Form(...), algorithm: str = Form("s
     total_ms = round((time.perf_counter() - start), 6)  
     return {"total_ms": total_ms, "results": results}
 
-@app.post("/api/encrypt-file")
+@app.post("/api/aes/encrypt-file")
 async def encrypt_file(file: UploadFile = File(...), password: str = Form(...)):
     content = await file.read() 
     encrypted_bytes = aes_file.encrypt_bytes(content, password)
@@ -81,7 +81,7 @@ async def encrypt_file(file: UploadFile = File(...), password: str = Form(...)):
         headers={"Content-Disposition": f"attachment; filename={file.filename}.enc"}
     )
 
-@app.post("/api/decrypt-file")
+@app.post("/api/aes/decrypt-file")
 async def decrypt_file(file: UploadFile = File(...), password: str = Form(...)):
     content = await file.read()
     decrypted_bytes = aes_file.decrypt_bytes(content, password)
@@ -92,3 +92,18 @@ async def decrypt_file(file: UploadFile = File(...), password: str = Form(...)):
         media_type="application/octet-stream",
         headers={"Content-Disposition": f"attachment; filename={original_name}"}
     )
+
+@app.post("/api/rsa/generate")
+async def generate_keys(key_size: int = Form(2048)):
+    private_key, public_key = rsa.generate(key_size)
+    return {"private_key": private_key, "public_key": public_key}
+
+@app.post("/api/rsa/encrypt")
+async def encrypt_text(public_key: str = Form(...), message: str = Form(...)):
+    ciphertext = rsa.encrypt(public_key, message)
+    return {"ciphertext": ciphertext}
+
+@app.post("/api/rsa/decrypt")
+async def decrypt_text(private_key: str = Form(...), ciphertext: str = Form(...)):
+    plaintext = rsa.decrypt(private_key, ciphertext)
+    return {"plaintext": plaintext}
