@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             document.getElementById('caesarResult').textContent = data.result;
-            document.querySelector('#caesar .result-container').classList.remove('d-none');
+            document.querySelectorAll('.result-container')[0].classList.remove('d-none');
 
             showToast('Cifrario di Cesare elaborato con successo');
         } catch (error) {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             document.getElementById('vigenereResult').textContent = data.result;
-            document.querySelector('#vigenere .result-container').classList.remove('d-none');
+            document.querySelectorAll('.result-container')[1].classList.remove('d-none');
 
             showToast('Cifrario di Vigenère elaborato con successo');
         } catch (error) {
@@ -191,7 +191,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             document.getElementById('hashResult').textContent = data.result;
-            document.querySelector('#hash .result-container').classList.remove('d-none');
+            // Corretto: usa querySelectorAll per prendere il terzo .result-container
+            document.querySelectorAll('.result-container')[2].classList.remove('d-none');
 
             showToast('Hash calcolato con successo');
         } catch (error) {
@@ -223,32 +224,33 @@ document.addEventListener('DOMContentLoaded', function () {
             const data = await response.json();
 
             const resultsContainer = document.querySelector('.hash-dictionary-result-container');
-            const resultsTableBody = document.getElementById('hashDictionaryResults');
+            const resultsDiv = document.getElementById('hashDictionaryResults');
             const timeElement = document.getElementById('hashDictionaryTime');
 
             timeElement.textContent = `Completato in ${data.total_ms} s`;
 
-            resultsTableBody.innerHTML = '';
+            resultsDiv.innerHTML = '';
 
             if (data.results.length === 0) {
-                const row = document.createElement('tr');
-                const messageCell = document.createElement('td');
-                messageCell.textContent = 'Nessuna corrispondenza trovata';
-                messageCell.colSpan = 2;
-                messageCell.className = 'text-center';
-                row.appendChild(messageCell);
-                resultsTableBody.appendChild(row);
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-warning mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Nessuna corrispondenza trovata</strong> nel dizionario fornito.
+                    </div>
+                `;
             } else {
-                data.results.forEach(result => {
-                    const row = document.createElement('tr');
-                    const textCell = document.createElement('td');
-                    textCell.textContent = result.text;
-                    const hashCell = document.createElement('td');
-                    hashCell.textContent = result.hash;
-                    row.appendChild(textCell);
-                    row.appendChild(hashCell);
-                    resultsTableBody.appendChild(row);
-                });
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-success mb-0">
+                        <h6 class="alert-heading">
+                            <i class="bi bi-check-circle-fill me-2"></i>Match trovato!
+                        </h6>
+                        <hr>
+                        <p class="mb-1"><strong>Testo originale:</strong></p>
+                        <pre class="mb-2 bg-white p-2 border rounded">${data.results[0].text}</pre>
+                        <p class="mb-1"><strong>Hash:</strong></p>
+                        <pre class="mb-0 bg-white p-2 border rounded" style="word-break: break-all;">${data.results[0].hash}</pre>
+                    </div>
+                `;
             }
 
             resultsContainer.classList.remove('d-none');

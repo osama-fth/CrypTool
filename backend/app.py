@@ -41,7 +41,8 @@ async def vigenere_dictionary_attack(text: str = Form(...), dictionary: str = Fo
     start = time.perf_counter()
     results = []
     
-    words = list(set([word.strip() for word in dictionary.replace(",", " ").replace("\n", " ").split() if word.strip()]))
+    words = [line.strip() for line in dictionary.splitlines() if line.strip()]
+    words = list(dict.fromkeys(words))
     
     for key in words:
         decrypted = vigenere.decrypt(text, key)
@@ -60,7 +61,8 @@ async def hash_dictionary_attack(hash: str = Form(...), algorithm: str = Form("s
     start = time.perf_counter()
     results = []
     
-    words = list(set([word.strip() for word in dictionary.replace(",", " ").replace("\n", " ").split() if word.strip()]))
+    words = [line.strip() for line in dictionary.splitlines() if line.strip()]
+    words = list(dict.fromkeys(words))
     
     for key in words:
         if (hashutils.hash(key, algorithm) == hash):
