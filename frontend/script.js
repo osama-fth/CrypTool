@@ -436,6 +436,112 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Bcrypt form
+    const bcryptForm = document.getElementById('bcryptForm');
+    if (bcryptForm) {
+        bcryptForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const password = document.getElementById('bcryptPassword').value;
+            const rounds1 = parseInt(document.getElementById('bcryptRounds1').value);
+            const rounds2 = parseInt(document.getElementById('bcryptRounds2').value);
+            const rounds3 = parseInt(document.getElementById('bcryptRounds3').value);
+
+            try {
+                const formData = new FormData();
+                formData.append('password', password);
+                formData.append('rounds1', rounds1);
+                formData.append('rounds2', rounds2);
+                formData.append('rounds3', rounds3);
+
+                const response = await fetch(`${API_BASE_URL}/api/hash/bcrypt`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                const resultsContainer = document.querySelector('.bcrypt-result-container');
+                const resultsTableBody = document.getElementById('bcryptResults');
+
+                resultsTableBody.innerHTML = '';
+
+                data.bcrypt.forEach(result => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td><span class="badge bg-primary">${result.rounds}</span></td>
+                        <td><strong>${result.time_ms} s</strong></td>
+                        <td><code style="font-size: 0.7rem; word-break: break-all;">${result.hash}</code></td>
+                    `;
+                    resultsTableBody.appendChild(row);
+                });
+
+                resultsContainer.classList.remove('d-none');
+
+                showToast('Hash bcrypt generati con successo');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Errore durante la generazione degli hash', true);
+            }
+        });
+    }
+
+    // Bcrypt verify form
+    const bcryptVerifyForm = document.getElementById('bcryptVerifyForm');
+    if (bcryptVerifyForm) {
+        bcryptVerifyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const password = document.getElementById('bcryptVerifyPassword').value;
+            const hashedPassword = document.getElementById('bcryptHash').value.trim();
+
+            try {
+                const formData = new FormData();
+                formData.append('password', password);
+                formData.append('hashedPassword', hashedPassword);
+
+                const response = await fetch(`${API_BASE_URL}/api/hash/bcrypt-verify`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                const resultsContainer = document.querySelector('.bcrypt-verify-result-container');
+                const resultsDiv = document.getElementById('bcryptVerifyResult');
+
+                if (data.verified) {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-success mb-0">
+                            <h6 class="alert-heading">
+                                <i class="bi bi-check-circle-fill me-2"></i>Verifica RIUSCITA
+                            </h6>
+                            <hr>
+                            <p class="mb-0">La password corrisponde all'hash fornito!</p>
+                        </div>
+                    `;
+                } else {
+                    resultsDiv.innerHTML = `
+                        <div class="alert alert-danger mb-0">
+                            <h6 class="alert-heading">
+                                <i class="bi bi-x-circle-fill me-2"></i>Verifica FALLITA
+                            </h6>
+                            <hr>
+                            <p class="mb-0">La password NON corrisponde all'hash fornito.</p>
+                        </div>
+                    `;
+                }
+
+                resultsContainer.classList.remove('d-none');
+
+                showToast(data.verified ? 'Password verificata con successo' : 'Password non corrispondente');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Errore durante la verifica', true);
+            }
+        });
+    }
+
     // Toast notification helper
     function showToast(message, isError = false) {
         const toast = document.getElementById('resultToast');

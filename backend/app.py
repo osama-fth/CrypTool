@@ -72,6 +72,31 @@ async def hash_dictionary_attack(hash: str = Form(...), algorithm: str = Form("s
     total_ms = round((time.perf_counter() - start), 6)  
     return {"total_ms": total_ms, "results": results}
 
+@app.post("/api/hash/bcrypt")
+async def bcrypt_multi(password: str = Form(...), rounds1: int = Form(10), rounds2: int = Form(12), rounds3: int = Form(14)):
+    """
+    Genera 3 hash bcrypt della stessa password con cost factor diversi e misura il tempo di generazione.
+    """
+    
+    results = []
+    for rounds in (rounds1, rounds2, rounds3):
+        t0 = time.perf_counter()
+        h = hashutils.bcrypt_hash(password, rounds)
+        t_ms = round((time.perf_counter() - t0), 6)
+        results.append({"rounds": rounds, "hash": h, "time_ms": t_ms})
+
+    return { "bcrypt": results}
+
+@app.post("/api/hash/bcrypt-verify")
+async def bcrypt_verify_endpoint(password: str = Form(...), hashedPassword: str = Form(...)):
+    """
+    Verifica se la password corrisponde all'hash bcrypt fornito.
+    Restituisce True/False.
+    """
+       
+    ok = hashutils.bcrypt_verify(password, hashedPassword)
+    return {"verified": ok}
+
 @app.post("/api/aes/encrypt-file")
 async def encrypt_file(file: UploadFile = File(...), password: str = Form(...)):
     content = await file.read() 

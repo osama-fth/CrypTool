@@ -19,7 +19,6 @@
         <div class="container">
             <a class="navbar-brand" href="#">
                 <i class="bi bi-shield-lock-fill"></i> CrypTool
-                <span class="badge bg-info ms-2">Laboratorio Interattivo</span>
             </a>
         </div>
     </nav>
@@ -190,9 +189,10 @@
                     <div class="security-info alert alert-danger">
                         <h6><i class="bi bi-exclamation-triangle-fill me-2"></i>Perché NON è sicuro</h6>
                         <ul class="mb-0 small">
-                            <li><strong>Chiavi corte</strong> - pattern ripetitivi identificabili con analisi Kasiski</li>
+                            <li><strong>Chiavi corte</strong> - pattern ripetitivi identificabili con <em>analisi di Kasiski</em></li>
+                            <li><strong>Analisi di Kasiski</strong> - trova sequenze ripetute nel testo cifrato per determinare la lunghezza della chiave</li>
                             <li><strong>Dictionary attack</strong> - vulnerabile se si usano parole comuni come chiavi</li>
-                            <li><strong>Chiavi lunghe deboli</strong> - se la chiave è più corta del messaggio, crea periodicità</li>
+                            <li><strong>Analisi di frequenza</strong> - una volta nota la lunghezza della chiave, si applica l'analisi statistica su ogni "colonna"</li>
                         </ul>
                     </div>
 
@@ -243,8 +243,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="vigenereDictionary" class="form-label">Dizionario</label>
-                                    <textarea class="form-control" id="vigenereDictionary" rows="3" placeholder="es: password segreto chiave test..." required></textarea>
-                                    <small class="text-muted">Parole separate da spazi, virgole o a capo</small>
+                                    <textarea class="form-control" id="vigenereDictionary" rows="3" placeholder="Inserisci qui il tuo dizionario" required></textarea>
+                                    <small class="text-muted">Andare a capo per ogni stringa</small>
                                 </div>
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-lightning-fill me-1"></i>Simula Attacco
@@ -378,8 +378,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="hashDictionary" class="form-label">Dizionario</label>
-                                    <textarea class="form-control" id="hashDictionary" rows="3" placeholder="password admin test 123456..." required></textarea>
-                                    <small class="text-muted">Parole separate da spazi</small>
+                                    <textarea class="form-control" id="hashDictionary" rows="3" placeholder="Inserisci qui il tuo dizionario" required></textarea>
+                                    <small class="text-muted">Andare a capo per ogni stringa</small>
                                 </div>
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-lightning-fill me-1"></i>Simula Attacco
@@ -395,6 +395,129 @@
                                         <div id="hashDictionaryResults"></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bcrypt -->
+            <div class="card crypto-card mb-5">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h4 class="mb-1">
+                                <i class="bi bi-shield-lock me-2"></i>Bcrypt
+                            </h4>
+                            <p class="text-muted small mb-0">Password hashing con salt e cost factor</p>
+                        </div>
+                        <span class="badge bg-success">SICURO per password</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="security-info alert alert-success">
+                        <h6><i class="bi bi-shield-check me-2"></i>Perché È sicuro per le password</h6>
+                        <ul class="mb-0 small">
+                            <li><strong>Salt automatico</strong> - ogni hash è unico anche per password identiche</li>
+                            <li><strong>Cost factor configurabile</strong> - rallenta intenzionalmente l'hashing (difesa contro brute force)</li>
+                            <li><strong>Adattivo</strong> - può aumentare il cost factor nel tempo per contrastare hardware più potente</li>
+                            <li><strong>Uso attuale</strong> - standard per memorizzare password in database (alternativa: Argon2, scrypt)</li>
+                            <li><strong>Non reversibile</strong> - impossibile ottenere la password dall'hash, solo verifica</li>
+                        </ul>
+                    </div>
+
+                    <!-- Generazione Hash -->
+                    <h5 class="tool-title">Generazione Hash con Cost Factor</h5>
+                    <div class="alert alert-info small mb-3">
+                        <strong>Cost Factor:</strong> Ogni incremento di +1 raddoppia il tempo di calcolo. 
+                        Valori tipici: 10-12 (bilanciamento), 14+ (alta sicurezza).
+                    </div>
+                    <form id="bcryptForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="bcryptPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="bcryptPassword" placeholder="Inserisci una password" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cost Factor (rounds)</label>
+                                <div class="row g-2">
+                                    <div class="col-4">
+                                        <input type="number" class="form-control" id="bcryptRounds1" min="4" max="20" value="10" required>
+                                        <small class="text-muted">Round 1</small>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" class="form-control" id="bcryptRounds2" min="4" max="20" value="12" required>
+                                        <small class="text-muted">Round 2</small>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" class="form-control" id="bcryptRounds3" min="4" max="20" value="14" required>
+                                        <small class="text-muted">Round 3</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-gear-fill me-1"></i>Genera Hash Bcrypt
+                        </button>
+                    </form>
+                    
+                    <div class="bcrypt-result-container mt-3 d-none">
+                        <div class="card bg-light">
+                            <div class="card-header">
+                                <i class="bi bi-list-check me-2"></i>Hash generati con tempi
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th style="width: 20%;">Cost Factor</th>
+                                                <th style="width: 20%;">Tempo (s)</th>
+                                                <th style="width: 60%;">Hash</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="bcryptResults"></tbody>
+                                    </table>
+                                </div>
+                                <div class="alert alert-info mt-3 mb-0 small">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Nota: Il tempo aumenta esponenzialmente. Cost 14 richiede ~1-2 secondi su hardware moderno.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Verifica Password -->
+                    <h5 class="tool-title">Verifica Password</h5>
+                    <div class="alert alert-warning small mb-3">
+                        <strong>Verifica:</strong> Controlla se una password corrisponde a un hash bcrypt esistente.
+                    </div>
+                    <form id="bcryptVerifyForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="bcryptVerifyPassword" class="form-label">Password da verificare</label>
+                                <input type="password" class="form-control" id="bcryptVerifyPassword" placeholder="Inserisci la password" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="bcryptHash" class="form-label">Hash Bcrypt</label>
+                                <textarea class="form-control" id="bcryptHash" rows="1" placeholder="$2b$12$..." required></textarea>
+                                <small class="text-muted">Incolla un hash bcrypt generato precedentemente</small>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Verifica Password
+                        </button>
+                    </form>
+                    
+                    <div class="bcrypt-verify-result-container mt-3 d-none">
+                        <div class="card bg-light">
+                            <div class="card-header">
+                                <i class="bi bi-shield-check me-2"></i>Risultato Verifica
+                            </div>
+                            <div class="card-body">
+                                <div id="bcryptVerifyResult"></div>
                             </div>
                         </div>
                     </div>

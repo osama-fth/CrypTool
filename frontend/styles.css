@@ -312,7 +312,9 @@ textarea.form-control {
 .result-container,
 .bruteforce-result-container,
 .dictionary-result-container,
-.hash-dictionary-result-container {
+.hash-dictionary-result-container,
+.bcrypt-result-container,
+.bcrypt-verify-result-container {
     animation: slideIn 0.3s ease-out;
 }
 
