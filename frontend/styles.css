@@ -90,7 +90,8 @@ main {
 }
 
 .hero-section .lead {
-    color: #e2e8f0; /* era #cbd5e1 - contrasto migliorato */
+    color: #e2e8f0;
+    /* era #cbd5e1 - contrasto migliorato */
     max-width: 800px;
     margin: 0 auto;
 }
@@ -123,7 +124,8 @@ main {
 }
 
 .stat-label {
-    color: #e2e8f0; /* era #cbd5e1 - contrasto migliorato */
+    color: #e2e8f0;
+    /* era #cbd5e1 - contrasto migliorato */
     font-size: 0.85rem;
     margin-top: 0.25rem;
 }
@@ -323,6 +325,7 @@ textarea.form-control {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

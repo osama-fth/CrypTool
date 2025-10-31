@@ -28,7 +28,8 @@
         <div class="container text-center">
             <h1 class="display-4 fw-bold mb-3">Laboratorio di Crittografia Interattivo</h1>
             <p class="lead text-white mb-4">
-                Esplora e sperimenta con diversi algoritmi crittografici, scopri quali sono sicuri e quali vulnerabili agli attacchi moderni.
+                Esplora e sperimenta con diversi algoritmi crittografici, scopri quali sono sicuri e quali vulnerabili
+                agli attacchi moderni.
             </p>
             <div class="d-flex justify-content-center gap-3 flex-wrap">
                 <div class="stat-card">
@@ -38,7 +39,7 @@
                 </div>
                 <div class="stat-card">
                     <i class="bi bi-shield-check text-success"></i>
-                    <div class="stat-number">2</div>
+                    <div class="stat-number">3</div>
                     <div class="stat-label">Algoritmi Moderni</div>
                 </div>
                 <div class="stat-card">
@@ -58,12 +59,16 @@
                     <div class="info-card">
                         <h3><i class="bi bi-info-circle-fill text-primary me-2"></i>Come usare questo laboratorio</h3>
                         <p class="mb-2">
-                            Ogni sezione rappresenta un algoritmo crittografico con indicatori di sicurezza. Sperimenta liberamente per capire:
+                            Ogni sezione rappresenta un algoritmo crittografico con indicatori di sicurezza. Sperimenta
+                            liberamente per capire:
                         </p>
                         <ul class="mb-0">
-                            <li><strong>Algoritmi storici</strong> (<span class="badge bg-danger p-1">NON SICURO</span>): Cesare, Vigenère, Hash MD5/SHA-1 - vulnerabili agli attacchi moderni</li>
-                            <li><strong>Algoritmi moderni</strong> (<span class="badge bg-success p-1">SICURO</span>): AES-256, RSA-2048+ - standard industriali attuali</li>
-                            <li><strong>Simulazioni attacchi</strong>: Brute force, Dictionary attack - per comprendere le vulnerabilità</li>
+                            <li><strong>Algoritmi storici</strong>: Cesare, Vigenère, Hash MD5/SHA-1 - vulnerabili agli
+                                attacchi moderni</li>
+                            <li><strong>Algoritmi moderni</strong>: AES-256, RSA-2048+, Bcrypt - standard industriali
+                                attuali</li>
+                            <li><strong>Simulazioni attacchi</strong>: Brute force, Dictionary attack - per comprendere
+                                le vulnerabilità</li>
                         </ul>
                     </div>
                 </div>
@@ -83,7 +88,8 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-123 me-2"></i>Cifrario di Cesare
                             </h4>
-                            <p class="text-muted small mb-0">Cifratura a sostituzione monoalfabetica (50 a.C.)</p>
+                            <p class="text-muted small mb-0">Cifratura a sostituzione monoalfabetica (50 a.C.) |
+                                Endpoint: POST /api/caesar</p>
                         </div>
                         <span class="badge bg-danger">NON SICURO</span>
                     </div>
@@ -101,14 +107,21 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h5 class="tool-title">Cifratura/Decifratura</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Sposta ogni lettera dell'alfabeto di un numero fisso di
+                                posizioni (shift).
+                                Ad esempio, con shift=3: A→D, B→E, C→F.
+                            </div>
                             <form id="caesarForm">
                                 <div class="mb-3">
                                     <label for="caesarText" class="form-label">Testo</label>
-                                    <textarea class="form-control" id="caesarText" rows="3" placeholder="Inserisci il testo da cifrare/decifrare" required></textarea>
+                                    <textarea class="form-control" id="caesarText" rows="3"
+                                        placeholder="Inserisci il testo da cifrare/decifrare" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="caesarShift" class="form-label">Scorrimento (1-25)</label>
-                                    <input type="number" class="form-control" id="caesarShift" min="1" max="25" value="3" required>
+                                    <input type="number" class="form-control" id="caesarShift" min="1" max="25"
+                                        value="3" required>
                                 </div>
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" id="caesarDecode">
@@ -136,11 +149,13 @@
                             </h5>
                             <div class="alert alert-warning small mb-3">
                                 <strong>Dimostrazione:</strong> Testa tutte le 25 chiavi possibili in millisecondi.
+                                L'attacco prova ogni shift da 1 a 25 e mostra tutti i risultati.
                             </div>
                             <form id="caesarBruteforceForm">
                                 <div class="mb-3">
                                     <label for="caesarBruteforceText" class="form-label">Testo cifrato</label>
-                                    <textarea class="form-control" id="caesarBruteforceText" rows="3" placeholder="Inserisci il testo cifrato" required></textarea>
+                                    <textarea class="form-control" id="caesarBruteforceText" rows="3"
+                                        placeholder="Inserisci il testo cifrato" required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-danger">
                                     <i class="bi bi-lightning-fill me-1"></i>Simula Attacco
@@ -180,7 +195,8 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-key me-2"></i>Cifrario di Vigenère
                             </h4>
-                            <p class="text-muted small mb-0">Cifratura polialfabetica con chiave (1553)</p>
+                            <p class="text-muted small mb-0">Cifratura polialfabetica con chiave (1553) | Endpoint: POST
+                                /api/vigenere</p>
                         </div>
                         <span class="badge bg-danger">NON SICURO</span>
                     </div>
@@ -189,24 +205,35 @@
                     <div class="security-info alert alert-danger">
                         <h6><i class="bi bi-exclamation-triangle-fill me-2"></i>Perché NON è sicuro</h6>
                         <ul class="mb-0 small">
-                            <li><strong>Chiavi corte</strong> - pattern ripetitivi identificabili con <em>analisi di Kasiski</em></li>
-                            <li><strong>Analisi di Kasiski</strong> - trova sequenze ripetute nel testo cifrato per determinare la lunghezza della chiave</li>
-                            <li><strong>Dictionary attack</strong> - vulnerabile se si usano parole comuni come chiavi</li>
-                            <li><strong>Analisi di frequenza</strong> - una volta nota la lunghezza della chiave, si applica l'analisi statistica su ogni "colonna"</li>
+                            <li><strong>Chiavi corte</strong> - pattern ripetitivi identificabili con <em>analisi di
+                                    Kasiski</em></li>
+                            <li><strong>Analisi di Kasiski</strong> - trova sequenze ripetute nel testo cifrato per
+                                determinare la lunghezza della chiave</li>
+                            <li><strong>Dictionary attack</strong> - vulnerabile se si usano parole comuni come chiavi
+                            </li>
+                            <li><strong>Analisi di frequenza</strong> - una volta nota la lunghezza della chiave, si
+                                applica l'analisi statistica su ogni "colonna"</li>
                         </ul>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <h5 class="tool-title">Cifratura/Decifratura</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Usa una parola chiave ripetuta per cifrare il testo.
+                                Ogni lettera della chiave determina lo shift per la corrispondente lettera del testo.
+                                Esempio: chiave "KEY", testo "HELLO" → shift K(10), E(4), Y(24), K(10), E(4).
+                            </div>
                             <form id="vigenereForm">
                                 <div class="mb-3">
                                     <label for="vigenereText" class="form-label">Testo</label>
-                                    <textarea class="form-control" id="vigenereText" rows="3" placeholder="Inserisci il testo" required></textarea>
+                                    <textarea class="form-control" id="vigenereText" rows="3"
+                                        placeholder="Inserisci il testo" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="vigenereKey" class="form-label">Chiave</label>
-                                    <input type="text" class="form-control" id="vigenereKey" placeholder="es: CHIAVE" required>
+                                    <input type="text" class="form-control" id="vigenereKey" placeholder="es: CHIAVE"
+                                        required>
                                     <small class="text-muted">Solo lettere, senza spazi o numeri</small>
                                 </div>
                                 <div class="form-check mb-3">
@@ -235,15 +262,19 @@
                             </h5>
                             <div class="alert alert-warning small mb-3">
                                 <strong>Dimostrazione:</strong> Prova tutte le parole del dizionario come chiavi.
+                                Ogni riga del dizionario viene testata come possibile chiave di decifratura (anche frasi
+                                con spazi).
                             </div>
                             <form id="vigenereDictionaryAttackForm">
                                 <div class="mb-3">
                                     <label for="vigenereDictionaryText" class="form-label">Testo cifrato</label>
-                                    <textarea class="form-control" id="vigenereDictionaryText" rows="2" placeholder="Testo cifrato da attaccare" required></textarea>
+                                    <textarea class="form-control" id="vigenereDictionaryText" rows="2"
+                                        placeholder="Testo cifrato da attaccare" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="vigenereDictionary" class="form-label">Dizionario</label>
-                                    <textarea class="form-control" id="vigenereDictionary" rows="3" placeholder="Inserisci qui il tuo dizionario" required></textarea>
+                                    <textarea class="form-control" id="vigenereDictionary" rows="3"
+                                        placeholder="Inserisci qui il tuo dizionario" required></textarea>
                                     <small class="text-muted">Andare a capo per ogni stringa</small>
                                 </div>
                                 <button type="submit" class="btn btn-danger">
@@ -284,7 +315,7 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-fingerprint me-2"></i>Funzioni Hash
                             </h4>
-                            <p class="text-muted small mb-0">MD5, SHA-1, SHA-256</p>
+                            <p class="text-muted small mb-0">MD5, SHA-1, SHA-256 | Endpoint: POST /api/hash</p>
                         </div>
                         <div>
                             <span class="badge bg-danger me-2">MD5: NON SICURO</span>
@@ -303,6 +334,7 @@
                                     <li>Collisioni note dal 2004</li>
                                     <li>128 bit - troppo corto</li>
                                     <li>Attacchi pratici esistenti</li>
+                                    <li>Uso: solo checksum legacy</li>
                                 </ul>
                             </div>
                             <div class="col-md-4">
@@ -311,6 +343,7 @@
                                     <li>Collisioni dimostrate (2017)</li>
                                     <li>160 bit - inadeguato</li>
                                     <li>Non più raccomandato</li>
+                                    <li>Google ha dimostrato collisioni</li>
                                 </ul>
                             </div>
                             <div class="col-md-4">
@@ -319,6 +352,7 @@
                                     <li>Nessuna collisione nota</li>
                                     <li>256 bit - robusto</li>
                                     <li>Standard attuale (2023+)</li>
+                                    <li>Uso: Bitcoin, certificati SSL</li>
                                 </ul>
                             </div>
                         </div>
@@ -327,10 +361,16 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h5 class="tool-title">Calcolo Hash</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Hash function:</strong> Trasforma un testo di lunghezza arbitraria in una
+                                stringa di lunghezza fissa.
+                                È unidirezionale (non reversibile) e deterministico (stesso input = stesso output).
+                            </div>
                             <form id="hashForm">
                                 <div class="mb-3">
                                     <label for="hashText" class="form-label">Testo da hashare</label>
-                                    <textarea class="form-control" id="hashText" rows="3" placeholder="Inserisci il testo" required></textarea>
+                                    <textarea class="form-control" id="hashText" rows="3"
+                                        placeholder="Inserisci il testo" required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="hashAlgorithm" class="form-label">Algoritmo</label>
@@ -362,11 +402,14 @@
                             </h5>
                             <div class="alert alert-warning small mb-3">
                                 <strong>Dimostrazione:</strong> Trova il testo originale provando parole comuni.
+                                L'attacco calcola l'hash di ogni parola nel dizionario e confronta con l'hash target.
+                                Efficace contro password deboli hashate con MD5/SHA-1.
                             </div>
                             <form id="hashDictionaryAttackForm">
                                 <div class="mb-3">
                                     <label for="hashDictionaryText" class="form-label">Hash target</label>
-                                    <input type="text" class="form-control" id="hashDictionaryText" placeholder="es: 5f4dcc3b5aa765d61d8327deb882cf99" required>
+                                    <input type="text" class="form-control" id="hashDictionaryText"
+                                        placeholder="es: 5f4dcc3b5aa765d61d8327deb882cf99" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="hashDictionaryAttackAlgorithm" class="form-label">Algoritmo</label>
@@ -378,7 +421,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="hashDictionary" class="form-label">Dizionario</label>
-                                    <textarea class="form-control" id="hashDictionary" rows="3" placeholder="Inserisci qui il tuo dizionario" required></textarea>
+                                    <textarea class="form-control" id="hashDictionary" rows="3"
+                                        placeholder="Inserisci qui il tuo dizionario" required></textarea>
                                     <small class="text-muted">Andare a capo per ogni stringa</small>
                                 </div>
                                 <button type="submit" class="btn btn-danger">
@@ -409,7 +453,8 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-shield-lock me-2"></i>Bcrypt
                             </h4>
-                            <p class="text-muted small mb-0">Password hashing con salt e cost factor</p>
+                            <p class="text-muted small mb-0">Password hashing con salt e cost factor | Endpoint: POST
+                                /api/hash/bcrypt</p>
                         </div>
                         <span class="badge bg-success">SICURO per password</span>
                     </div>
@@ -418,39 +463,49 @@
                     <div class="security-info alert alert-success">
                         <h6><i class="bi bi-shield-check me-2"></i>Perché È sicuro per le password</h6>
                         <ul class="mb-0 small">
-                            <li><strong>Salt automatico</strong> - ogni hash è unico anche per password identiche</li>
-                            <li><strong>Cost factor configurabile</strong> - rallenta intenzionalmente l'hashing (difesa contro brute force)</li>
-                            <li><strong>Adattivo</strong> - può aumentare il cost factor nel tempo per contrastare hardware più potente</li>
-                            <li><strong>Uso attuale</strong> - standard per memorizzare password in database (alternativa: Argon2, scrypt)</li>
-                            <li><strong>Non reversibile</strong> - impossibile ottenere la password dall'hash, solo verifica</li>
+                            <li><strong>Salt automatico</strong> - ogni hash è unico anche per password identiche
+                                (previene rainbow tables)</li>
+                            <li><strong>Cost factor configurabile</strong> - rallenta intenzionalmente l'hashing (difesa
+                                contro brute force)</li>
+                            <li><strong>Adattivo</strong> - può aumentare il cost factor nel tempo per contrastare
+                                hardware più potente</li>
+                            <li><strong>Uso attuale</strong> - standard per memorizzare password in database
+                                (alternativa: Argon2, scrypt)</li>
+                            <li><strong>Non reversibile</strong> - impossibile ottenere la password dall'hash, solo
+                                verifica (one-way function)</li>
                         </ul>
                     </div>
 
                     <!-- Generazione Hash -->
                     <h5 class="tool-title">Generazione Hash con Cost Factor</h5>
                     <div class="alert alert-info small mb-3">
-                        <strong>Cost Factor:</strong> Ogni incremento di +1 raddoppia il tempo di calcolo. 
-                        Valori tipici: 10-12 (bilanciamento), 14+ (alta sicurezza).
+                        <strong>Cost Factor:</strong> Ogni incremento di +1 raddoppia il tempo di calcolo.
+                        Valori tipici: 10-12 (bilanciamento velocità/sicurezza), 14+ (alta sicurezza, ~1-2s).
+                        Il sistema può generare 3 hash simultanei con cost factor diversi per confrontare i tempi.
                     </div>
                     <form id="bcryptForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="bcryptPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="bcryptPassword" placeholder="Inserisci una password" required>
+                                <input type="password" class="form-control" id="bcryptPassword"
+                                    placeholder="Inserisci una password" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Cost Factor (rounds)</label>
                                 <div class="row g-2">
                                     <div class="col-4">
-                                        <input type="number" class="form-control" id="bcryptRounds1" min="4" max="20" value="10" required>
+                                        <input type="number" class="form-control" id="bcryptRounds1" min="4" max="20"
+                                            value="10" required>
                                         <small class="text-muted">Round 1</small>
                                     </div>
                                     <div class="col-4">
-                                        <input type="number" class="form-control" id="bcryptRounds2" min="4" max="20" value="12" required>
+                                        <input type="number" class="form-control" id="bcryptRounds2" min="4" max="20"
+                                            value="12" required>
                                         <small class="text-muted">Round 2</small>
                                     </div>
                                     <div class="col-4">
-                                        <input type="number" class="form-control" id="bcryptRounds3" min="4" max="20" value="14" required>
+                                        <input type="number" class="form-control" id="bcryptRounds3" min="4" max="20"
+                                            value="14" required>
                                         <small class="text-muted">Round 3</small>
                                     </div>
                                 </div>
@@ -460,7 +515,7 @@
                             <i class="bi bi-gear-fill me-1"></i>Genera Hash Bcrypt
                         </button>
                     </form>
-                    
+
                     <div class="bcrypt-result-container mt-3 d-none">
                         <div class="card bg-light">
                             <div class="card-header">
@@ -481,7 +536,8 @@
                                 </div>
                                 <div class="alert alert-info mt-3 mb-0 small">
                                     <i class="bi bi-info-circle me-2"></i>
-                                    Nota: Il tempo aumenta esponenzialmente. Cost 14 richiede ~1-2 secondi su hardware moderno.
+                                    Nota: Il tempo aumenta esponenzialmente. Cost 14 richiede ~1-2 secondi su hardware
+                                    moderno.
                                 </div>
                             </div>
                         </div>
@@ -493,16 +549,20 @@
                     <h5 class="tool-title">Verifica Password</h5>
                     <div class="alert alert-warning small mb-3">
                         <strong>Verifica:</strong> Controlla se una password corrisponde a un hash bcrypt esistente.
+                        Bcrypt confronta la password in input con l'hash memorizzato senza decifrarlo.
+                        Endpoint: POST /api/hash/bcrypt-verify
                     </div>
                     <form id="bcryptVerifyForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="bcryptVerifyPassword" class="form-label">Password da verificare</label>
-                                <input type="password" class="form-control" id="bcryptVerifyPassword" placeholder="Inserisci la password" required>
+                                <input type="password" class="form-control" id="bcryptVerifyPassword"
+                                    placeholder="Inserisci la password" required>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="bcryptHash" class="form-label">Hash Bcrypt</label>
-                                <textarea class="form-control" id="bcryptHash" rows="1" placeholder="$2b$12$..." required></textarea>
+                                <textarea class="form-control" id="bcryptHash" rows="1" placeholder="$2b$12$..."
+                                    required></textarea>
                                 <small class="text-muted">Incolla un hash bcrypt generato precedentemente</small>
                             </div>
                         </div>
@@ -510,7 +570,7 @@
                             <i class="bi bi-check-circle me-1"></i>Verifica Password
                         </button>
                     </form>
-                    
+
                     <div class="bcrypt-verify-result-container mt-3 d-none">
                         <div class="card bg-light">
                             <div class="card-header">
@@ -538,7 +598,8 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-file-lock2 me-2"></i>AES-256 File Encryption
                             </h4>
-                            <p class="text-muted small mb-0">Advanced Encryption Standard - Cifratura simmetrica</p>
+                            <p class="text-muted small mb-0">Advanced Encryption Standard - Cifratura simmetrica |
+                                Endpoint: POST /api/aes/encrypt-file</p>
                         </div>
                         <span class="badge bg-success">SICURO</span>
                     </div>
@@ -547,16 +608,28 @@
                     <div class="security-info alert alert-success">
                         <h6><i class="bi bi-shield-check me-2"></i>Perché È sicuro</h6>
                         <ul class="mb-0 small">
-                            <li><strong>256 bit di chiave</strong> - 2^256 combinazioni possibili (impraticabile per brute force)</li>
-                            <li><strong>Standard governativo</strong> - approvato da NSA per documenti TOP SECRET</li>
-                            <li><strong>Uso attuale</strong> - WhatsApp, BitLocker, file system cifrati, VPN</li>
-                            <li><strong>Best practice</strong> - usa password lunghe (16+ caratteri) con lettere, numeri e simboli</li>
+                            <li><strong>256 bit di chiave</strong> - 2^256 combinazioni possibili (impraticabile per
+                                brute force, anche per supercalcolatori)</li>
+                            <li><strong>Standard governativo</strong> - approvato da NSA per documenti TOP SECRET dal
+                                2003</li>
+                            <li><strong>Uso attuale</strong> - WhatsApp, BitLocker, file system cifrati (LUKS,
+                                FileVault), VPN (IPSec)</li>
+                            <li><strong>Best practice</strong> - usa password lunghe (16+ caratteri) con lettere
+                                maiuscole/minuscole, numeri e simboli</li>
+                            <li><strong>Cifratura simmetrica</strong> - stessa chiave per cifrare e decifrare (veloce
+                                per grandi quantità di dati)</li>
                         </ul>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <h5 class="tool-title">Cifratura File</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Il file viene cifrato con AES-256 usando una chiave
+                                derivata dalla password (PBKDF2).
+                                Viene aggiunto un salt casuale e un IV (Initialization Vector) unico per ogni cifratura.
+                                Il file cifrato avrà estensione .enc e potrà essere scaricato.
+                            </div>
                             <form id="encryptFileForm">
                                 <div class="mb-3">
                                     <label for="encryptFile" class="form-label">File da cifrare</label>
@@ -564,8 +637,10 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="encryptPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="encryptPassword" placeholder="Password forte (16+ caratteri)" required>
-                                    <small class="text-success">Consiglio: usa lettere maiuscole, minuscole, numeri e simboli</small>
+                                    <input type="password" class="form-control" id="encryptPassword"
+                                        placeholder="Password forte (16+ caratteri)" required>
+                                    <small class="text-success">Consiglio: usa lettere maiuscole, minuscole, numeri e
+                                        simboli</small>
                                 </div>
                                 <button type="submit" class="btn btn-success">
                                     <i class="bi bi-lock-fill me-1"></i>Cifra File
@@ -575,6 +650,12 @@
 
                         <div class="col-lg-6">
                             <h5 class="tool-title">Decifratura File</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Carica un file .enc precedentemente cifrato e inserisci
+                                la stessa password usata per cifrarlo.
+                                Il sistema estrae salt e IV dal file, deriva la chiave e decifra il contenuto originale.
+                                Endpoint: POST /api/aes/decrypt-file
+                            </div>
                             <form id="decryptFileForm">
                                 <div class="mb-3">
                                     <label for="decryptFile" class="form-label">File cifrato (.enc)</label>
@@ -582,7 +663,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="decryptPassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="decryptPassword" placeholder="Password usata per cifrare" required>
+                                    <input type="password" class="form-control" id="decryptPassword"
+                                        placeholder="Password usata per cifrare" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="bi bi-unlock-fill me-1"></i>Decifra File
@@ -601,7 +683,8 @@
                             <h4 class="mb-1">
                                 <i class="bi bi-key-fill me-2"></i>RSA
                             </h4>
-                            <p class="text-muted small mb-0">Crittografia asimmetrica a chiave pubblica</p>
+                            <p class="text-muted small mb-0">Crittografia asimmetrica a chiave pubblica | Endpoint: POST
+                                /api/rsa/generate</p>
                         </div>
                         <span class="badge bg-success">SICURO (2048+ bit)</span>
                     </div>
@@ -610,16 +693,26 @@
                     <div class="security-info alert alert-success">
                         <h6><i class="bi bi-shield-check me-2"></i>Perché È sicuro</h6>
                         <ul class="mb-0 small">
-                            <li><strong>Chiave asimmetrica</strong> - chiave pubblica per cifrare, privata per decifrare</li>
-                            <li><strong>2048 bit minimo</strong> - standard attuale (4096 bit per massima sicurezza)</li>
-                            <li><strong>Uso attuale</strong> - HTTPS/TLS, firma digitale, scambio chiavi SSH, PGP/GPG</li>
-                            <li><strong>Limitazione</strong> - cifra solo dati piccoli; per file grandi, usa RSA + AES (ibrido)</li>
-                            <li><strong>Nota quantistica</strong> - vulnerabile ai computer quantistici futuri (post-quantum crypto in sviluppo)</li>
+                            <li><strong>Chiave asimmetrica</strong> - coppia di chiavi: pubblica (per
+                                cifrare/verificare) e privata (per decifrare/firmare)</li>
+                            <li><strong>2048 bit minimo</strong> - standard attuale NIST/ENISA (4096 bit per massima
+                                sicurezza a lungo termine)</li>
+                            <li><strong>Uso attuale</strong> - HTTPS/TLS (handshake), firma digitale, scambio chiavi
+                                SSH, PGP/GPG (email cifrate)</li>
+                            <li><strong>Limitazione</strong> - cifra solo dati piccoli (~245 byte per 2048-bit); per
+                                file grandi, usa RSA + AES (cifratura ibrida)</li>
+                            <li><strong>Nota quantistica</strong> - vulnerabile ai computer quantistici futuri con
+                                algoritmo di Shor (post-quantum crypto in sviluppo: CRYSTALS-Kyber)</li>
                         </ul>
                     </div>
 
                     <!-- Generazione Chiavi -->
                     <h5 class="tool-title">Generazione Coppia Chiavi</h5>
+                    <div class="alert alert-secondary small mb-3">
+                        <strong>Come funziona:</strong> Genera una coppia di chiavi RSA in formato PEM.
+                        La chiave pubblica può essere condivisa liberamente, mentre la privata deve rimanere segreta.
+                        Tempi di generazione: 1024-bit (~0.1s), 2048-bit (~0.5s), 4096-bit (~5-10s).
+                    </div>
                     <form id="rsaKeygenForm" class="mb-4">
                         <div class="row align-items-end">
                             <div class="col-md-6 mb-3 mb-md-0">
@@ -645,11 +738,14 @@
                             <div class="card-body">
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Chiave Pubblica (condividi)</label>
-                                    <pre class="bg-white p-3 border rounded" style="font-size: 0.75rem;" id="rsaPublicKeyResult"></pre>
+                                    <pre class="bg-white p-3 border rounded" style="font-size: 0.75rem;"
+                                        id="rsaPublicKeyResult"></pre>
                                 </div>
                                 <div>
-                                    <label class="form-label fw-bold text-danger">Chiave Privata (mantieni segreta!)</label>
-                                    <pre class="bg-white p-3 border rounded border-danger" style="font-size: 0.75rem;" id="rsaPrivateKeyResult"></pre>
+                                    <label class="form-label fw-bold text-danger">Chiave Privata (mantieni
+                                        segreta!)</label>
+                                    <pre class="bg-white p-3 border rounded border-danger" style="font-size: 0.75rem;"
+                                        id="rsaPrivateKeyResult"></pre>
                                 </div>
                             </div>
                         </div>
@@ -661,15 +757,23 @@
                         <!-- Cifratura -->
                         <div class="col-lg-6">
                             <h5 class="tool-title">Cifratura Messaggio</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Cifra un messaggio breve usando la chiave pubblica RSA.
+                                Il destinatario potrà decifrarlo solo con la corrispondente chiave privata.
+                                Limite: ~245 byte per chiave 2048-bit (OAEP padding). Endpoint: POST /api/rsa/encrypt
+                            </div>
                             <form id="rsaEncryptForm" class="mb-3">
                                 <div class="mb-3">
                                     <label for="rsaPublicKey" class="form-label">Chiave Pubblica</label>
-                                    <textarea class="form-control" id="rsaPublicKey" rows="4" placeholder="-----BEGIN PUBLIC KEY-----&#10;..." required></textarea>
+                                    <textarea class="form-control" id="rsaPublicKey" rows="4"
+                                        placeholder="-----BEGIN PUBLIC KEY-----&#10;..." required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="rsaPlaintext" class="form-label">Messaggio</label>
-                                    <textarea class="form-control" id="rsaPlaintext" rows="2" placeholder="Testo breve da cifrare" required></textarea>
-                                    <small class="text-warning">⚠️ RSA cifra solo messaggi brevi (~200 caratteri)</small>
+                                    <textarea class="form-control" id="rsaPlaintext" rows="2"
+                                        placeholder="Testo breve da cifrare" required></textarea>
+                                    <small class="text-warning">⚠️ RSA cifra solo messaggi brevi (~200
+                                        caratteri)</small>
                                 </div>
                                 <button type="submit" class="btn btn-success">
                                     <i class="bi bi-lock-fill me-1"></i>Cifra con Chiave Pubblica
@@ -681,7 +785,8 @@
                                         <i class="bi bi-shield-lock me-2"></i>Testo Cifrato
                                     </div>
                                     <div class="card-body">
-                                        <pre class="mb-0" style="font-size: 0.75rem; word-break: break-all;" id="rsaEncryptResult"></pre>
+                                        <pre class="mb-0" style="font-size: 0.75rem; word-break: break-all;"
+                                            id="rsaEncryptResult"></pre>
                                     </div>
                                 </div>
                             </div>
@@ -690,14 +795,22 @@
                         <!-- Decifratura -->
                         <div class="col-lg-6">
                             <h5 class="tool-title">Decifratura Messaggio</h5>
+                            <div class="alert alert-secondary small mb-3">
+                                <strong>Come funziona:</strong> Decifra un messaggio precedentemente cifrato con la
+                                chiave pubblica corrispondente.
+                                Richiede la chiave privata (segreta) per recuperare il testo originale.
+                                Endpoint: POST /api/rsa/decrypt
+                            </div>
                             <form id="rsaDecryptForm" class="mb-3">
                                 <div class="mb-3">
                                     <label for="rsaPrivateKey" class="form-label">Chiave Privata</label>
-                                    <textarea class="form-control" id="rsaPrivateKey" rows="5" placeholder="-----BEGIN PRIVATE KEY-----&#10;..." required></textarea>
+                                    <textarea class="form-control" id="rsaPrivateKey" rows="5"
+                                        placeholder="-----BEGIN PRIVATE KEY-----&#10;..." required></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="rsaCiphertext" class="form-label">Testo Cifrato</label>
-                                    <textarea class="form-control" id="rsaCiphertext" rows="3" placeholder="Testo cifrato in base64" required></textarea>
+                                    <textarea class="form-control" id="rsaCiphertext" rows="3"
+                                        placeholder="Testo cifrato in base64" required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">
                                     <i class="bi bi-unlock-fill me-1"></i>Decifra con Chiave Privata
@@ -723,30 +836,52 @@
                 <div class="col-12">
                     <div class="card border-primary">
                         <div class="card-header bg-primary text-white">
-                            <h4 class="mb-0"><i class="bi bi-lightbulb-fill me-2"></i>Best Practices per la Sicurezza</h4>
+                            <h4 class="mb-0"><i class="bi bi-lightbulb-fill me-2"></i>Best Practices per la Sicurezza
+                                Crittografica</h4>
                         </div>
                         <div class="card-body">
+                            <div class="alert alert-info mb-3">
+                                <strong>Principi fondamentali:</strong> La sicurezza crittografica dipende da algoritmi
+                                robusti, chiavi sufficientemente lunghe,
+                                implementazioni corrette e buone pratiche operative. Mai implementare crittografia "fai
+                                da te" - usa sempre librerie testate e aggiornate.
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h6 class="text-success"><i class="bi bi-check-circle-fill me-2"></i>Cosa FARE</h6>
                                     <ul>
-                                        <li>Usa <strong>AES-256</strong> per cifrare file/dati grandi</li>
-                                        <li>Usa <strong>RSA-2048+</strong> per scambio chiavi e firma digitale</li>
-                                        <li>Usa <strong>SHA-256+</strong> per hash e integrità</li>
-                                        <li>Password lunghe (16+ caratteri) con mix di caratteri</li>
-                                        <li>Aggiorna regolarmente algoritmi e dimensioni chiavi</li>
-                                        <li>Combina RSA + AES per cifratura ibrida di file grandi</li>
+                                        <li>Usa <strong>AES-256</strong> per cifrare file/dati grandi (simmetrico,
+                                            veloce)</li>
+                                        <li>Usa <strong>RSA-2048+</strong> per scambio chiavi, firma digitale e
+                                            autenticazione (asimmetrico)</li>
+                                        <li>Usa <strong>SHA-256+</strong> per hash e integrità dati (non MD5/SHA-1)</li>
+                                        <li>Usa <strong>Bcrypt/Argon2</strong> per hashare password (con salt e cost
+                                            factor adeguato)</li>
+                                        <li>Password lunghe (16+ caratteri) con mix di maiuscole, minuscole, numeri e
+                                            simboli</li>
+                                        <li>Aggiorna regolarmente algoritmi e dimensioni chiavi secondo standard
+                                            NIST/ENISA</li>
+                                        <li>Combina RSA + AES per cifratura ibrida di file grandi (RSA per chiave, AES
+                                            per dati)</li>
+                                        <li>Usa librerie crittografiche testate (OpenSSL, libsodium, cryptography.io)
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <h6 class="text-danger"><i class="bi bi-x-circle-fill me-2"></i>Cosa NON fare</h6>
                                     <ul>
-                                        <li>NON usare Cesare/Vigenère per dati reali (solo didattica)</li>
-                                        <li>NON usare MD5/SHA-1 per sicurezza (solo checksum legacy)</li>
-                                        <li>NON usare password corte o dizionario</li>
-                                        <li>NON condividere mai chiavi private RSA</li>
-                                        <li>NON cifrare file grandi direttamente con RSA</li>
-                                        <li>NON implementare crittografia custom (usa librerie testate)</li>
+                                        <li>NON usare Cesare/Vigenère per dati reali (solo scopo didattico/storico)</li>
+                                        <li>NON usare MD5/SHA-1 per sicurezza (solo checksum legacy, vulnerabili a
+                                            collisioni)</li>
+                                        <li>NON usare password corte (<12 caratteri) o parole di dizionario</li>
+                                        <li>NON condividere mai chiavi private RSA (compromissione totale del sistema)
+                                        </li>
+                                        <li>NON cifrare file grandi direttamente con RSA (lento e limitato a ~245 byte)
+                                        </li>
+                                        <li>NON implementare crittografia custom (vulnerabilità nascoste, difficili da
+                                            individuare)</li>
+                                        <li>NON riusare IV/nonce/salt (annulla la sicurezza della cifratura)</li>
+                                        <li>NON memorizzare password in chiaro o con hash reversibili</li>
                                     </ul>
                                 </div>
                             </div>

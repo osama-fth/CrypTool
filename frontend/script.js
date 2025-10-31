@@ -399,6 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 showToast('Testo cifrato con successo');
             } catch (error) {
                 console.error('Error:', error);
+
                 showToast('Errore durante la cifratura', true);
             }
         });
@@ -435,6 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
 
     // Bcrypt form
     const bcryptForm = document.getElementById('bcryptForm');

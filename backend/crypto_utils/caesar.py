@@ -1,4 +1,12 @@
 def encrypt(text: str, shift: int) -> str:
+    """
+    Cifra un testo con il cifrario di Cesare.
+    Solleva ValueError se shift non è valido.
+    """
+
+    if not (1 <= shift <= 25):
+        raise ValueError("Shift deve essere compreso tra 1 e 25")
+    
     result = ""
     for ch in text:
         if ch.islower():
@@ -12,4 +20,12 @@ def encrypt(text: str, shift: int) -> str:
     return result
 
 def decrypt(text: str, shift: int) -> str:
-    return encrypt(text, -shift)
+    """
+    Decifra un testo con il cifrario di Cesare.
+    Solleva ValueError se shift non è valido.
+    """
+   
+    if not (1 <= shift <= 25):
+        raise ValueError("Shift deve essere compreso tra 1 e 25")
+    
+    return encrypt(text, 26 - shift)

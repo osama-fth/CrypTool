@@ -4,6 +4,14 @@ def char_to_shift(ch: str) -> int:
     return 0 
 
 def encrypt(text: str, key: str) -> str:
+    """
+    Cifra un testo con il cifrario di Vigenère.
+    Solleva ValueError se la chiave non è valida.
+    """
+    
+    if not key.replace(" ", "").isalpha():
+        raise ValueError("La chiave deve contenere solo lettere e spazi")
+    
     result = ""
     key = key.lower()
     ki = 0
@@ -25,6 +33,14 @@ def encrypt(text: str, key: str) -> str:
     return result
 
 def decrypt(text: str, key: str) -> str:
+    """
+    Decifra un testo con il cifrario di Vigenère.
+    Solleva ValueError se la chiave non è valida.
+    """
+
+    if not key.replace(" ", "").isalpha():
+        raise ValueError("La chiave deve contenere solo lettere e spazi")
+    
     result = ""
     key = key.lower()
     ki = 0
