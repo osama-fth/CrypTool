@@ -1,151 +1,109 @@
 # CrypTool 🔐
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Bootstrap 5](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docs.docker.com)
-[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 
-Applicazione web semplice per operazioni crittografiche di base, composta da un backend FastAPI e un frontend statico Bootstrap.  
-- Backend: FastAPI, vedi [backend/app.py](backend/app.py) ⚙️  
-- Frontend: HTML/CSS/JS statici, vedi [frontend/index.html](frontend/index.html), [frontend/script.js](frontend/script.js), [frontend/styles.css](frontend/styles.css) 🎨  
-- Container: [docker-compose.yml](docker-compose.yml) 🐳
+**Laboratorio interattivo di crittografia** per esplorare algoritmi classici e moderni, comprendere le loro vulnerabilità e sperimentare con attacchi simulati.
 
-## Funzionalità ✨
+---
 
-- Cifrario di Cesare: cifratura/decifratura con scorrimento personalizzabile 🔁
-- Cifrario di Vigenère: cifratura/decifratura con chiave 🔑
-- Hash: MD5, SHA-1, SHA-256 🧮
-- Cifratura/Decifratura file con password (AES) 🗂️🔐
-- RSA: generazione chiavi, cifratura e decifratura 🔐🗝️
+## 🎯 Obiettivi del Laboratorio
 
-## Requisiti 🧰
+- **Comprendere algoritmi storici** (Cesare, Vigenère) e perché sono vulnerabili
+- **Sperimentare con hash function** (MD5, SHA-1, SHA-256, Bcrypt) e capire le differenze di sicurezza
+- **Utilizzare algoritmi moderni** (AES-256, RSA) per cifratura file e messaggi
+- **Simulare attacchi** (brute force, dictionary attack) in modo sicuro e controllato
+---
 
-- Docker e Docker Compose 🐳
-- Porte libere: 5173 (frontend), 8080 (backend) 🔌
+## 🧪 Cosa Puoi Fare
 
-## Avvio rapido 🚀
+### Algoritmi Storici (⚠️ NON Sicuri)
+- **Cifrario di Cesare**: Cifra e decifra con shift alfabetico | Simula attacco brute force
+- **Cifrario di Vigenère**: Cifra con chiave alfabetica | Simula dictionary attack
+- **Hash MD5/SHA-1**: Calcola hash legacy | Simula rainbow table attack
 
-Con Docker Compose (consigliato):
+### Algoritmi Moderni (✅ Sicuri)
+- **SHA-256**: Hash crittograficamente sicuro per integrità dati
+- **Bcrypt**: Password hashing con salt e cost factor configurabile
+- **AES-256**: Cifratura simmetrica di file con password robusta
+- **RSA-2048/4096**: Crittografia asimmetrica per messaggi e scambio chiavi
+
+### Simulazioni Attacchi
+- **Brute Force**: Prova tutte le combinazioni possibili (Cesare)
+- **Dictionary Attack**: Prova parole comuni come chiavi (Vigenère, Hash)
+- **Confronto Tempi**: Misura l'efficacia del cost factor (Bcrypt)
+
+---
+
+## 🚀 Avvio Rapido
+
+### Prerequisiti
+- **Docker** e **Docker Compose**
+- Porte libere: `5173` (frontend), `8080` (backend)
+
+### Lancio Applicazione
 
 ```bash
+# Clona il repository
+git clone <repository-url>
+cd CrypTool
+
 # Avvia frontend + backend
 docker compose up --build
 ```
 
-- Interfaccia Web: http://localhost:5173 🌐  
-- API/Swagger UI: http://localhost:8080/docs 📘
+**Accesso:**
+- 🌐 **Interfaccia Web**: http://localhost:5173
+- 📘 **API Docs (Swagger)**: http://localhost:8080/docs
 
-Arresto:
+### Arresto
 
 ```bash
+# Stop containers
 docker compose down
-```
 
-Arresto con rimozione volumi:
-
-```bash
+# Stop + rimozione volumi
 docker compose down -v
 ```
 
-## API Reference (POST) 🔗
+---
 
-Base URL: http://localhost:8080
+## 📚 Come Usare il Laboratorio
 
-### 1. /api/caesar
+1. **Esplora gli algoritmi**: Ogni card contiene una spiegazione teorica e indicatori di sicurezza
+2. **Sperimenta**: Cifra/decifra testi, genera hash, crea chiavi RSA
+3. **Simula attacchi**: Prova brute force e dictionary attack per capire le vulnerabilità
+4. **Confronta**: Misura i tempi di esecuzione (es. Bcrypt con diversi cost factor)
+5. **Impara**: Leggi le best practices e scopri quando usare ogni algoritmo
 
-**Descrizione:** Cifrario di Cesare: cifratura/decifratura con scorrimento personalizzabile.
+---
 
-**Parametri:**
-- `text`: string
-- `shift`: int (1–25)
-- `decode`: bool
+## 🔗 API Reference
 
-### 2. /api/vigenere
+Le API sono completamente documentate con **Swagger UI** interattivo.
 
-**Descrizione:** Cifrario di Vigenère: cifratura/decifratura con chiave.
+**Base URL**: `http://localhost:8080`
 
-**Parametri:**
-- `text`: string
-- `key`: string
-- `decode`: bool
+### Endpoint Disponibili
 
-### 3. /api/hash
+| Categoria | Endpoint | Metodo | Descrizione |
+|-----------|----------|--------|-------------|
+| **Cesare** | `/api/caesar` | POST | Cifra/decifra con shift |
+| | `/api/caesar/bruteforce` | POST | Attacco brute force |
+| **Vigenère** | `/api/vigenere` | POST | Cifra/decifra con chiave |
+| | `/api/vigenere/dictionaryattack` | POST | Dictionary attack |
+| **Hash** | `/api/hash` | POST | Calcola hash (MD5/SHA-1/SHA-256) |
+| | `/api/hash/dictionaryattack` | POST | Trova testo originale |
+| **Bcrypt** | `/api/hash/bcrypt` | POST | Genera hash con cost factor |
+| | `/api/hash/bcrypt-verify` | POST | Verifica password |
+| **AES** | `/api/aes/encrypt-file` | POST | Cifra file con password |
+| | `/api/aes/decrypt-file` | POST | Decifra file .enc |
+| **RSA** | `/api/rsa/generate` | POST | Genera coppia chiavi |
+| | `/api/rsa/encrypt` | POST | Cifra con chiave pubblica |
+| | `/api/rsa/decrypt` | POST | Decifra con chiave privata |
 
-**Descrizione:** Calcolo hash per MD5, SHA-1, SHA-256.
+**Per dettagli completi e test interattivi**: http://localhost:8080/docs
 
-**Parametri:**
-- `text`: string
-- `algorithm`: md5 | sha1 | sha256 (default sha256)
+---
 
-### 4. /api/aes/encrypt-file
 
-**Descrizione:** Cifratura file con password (AES).
-
-**Parametri:**
-- `file`: file binario
-- `password`: string
-
-### 5. /api/aes/decrypt-file
-
-**Descrizione:** Decifratura file con password (AES).
-
-**Parametri:**
-- `file`: file .enc
-- `password`: string
-
-### 6. /api/caesar/bruteforce
-
-**Descrizione:** Simula un attacco brute force sul Cifrario di Cesare.
-
-**Parametri:**
-- `ciphertext`: string
-
-### 7. /api/vigenere/dictionaryattack
-
-**Descrizione:** Simula un dictionary attack sul Cifrario di Vigenere.
-
-**Parametri:**
-- `text`: string (testo cifrato)
-- `dictionary`: string (parole separate da spazi, virgole o a capo)
-
-### 8. /api/hash/dictionaryattack
-
-**Descrizione:** Ricerca per dizionario un testo che produca l’hash dato (per MD5/SHA-1/SHA-256).
-
-**Parametri:**
-- `hash`: string
-- `algorithm`: md5 | sha1 | sha256 (default sha256)
-- `dictionary`: string (parole separate da spazi, virgole o a capo)
-
-### 9. /api/rsa/generate
-
-**Descrizione:** Genera una coppia di chiavi RSA (privata e pubblica).
-
-**Parametri:**
-- `key_size`: int (default 2048; es. 1024, 2048, 4096)
-
-**Risposta:**
-- `private_key`: string (PEM)
-- `public_key`: string (PEM)
-
-### 10. /api/rsa/encrypt
-
-**Descrizione:** Cifra un messaggio con la chiave pubblica RSA.
-
-**Parametri:**
-- `public_key`: string (PEM)
-- `message`: string
-
-**Risposta:**
-- `ciphertext`: string
-
-### 11. /api/rsa/decrypt
-
-**Descrizione:** Decifra un ciphertext con la chiave privata RSA.
-
-**Parametri:**
-- `private_key`: string (PEM)
-- `ciphertext`: string
-
-**Risposta:**
-- `plaintext`: string
