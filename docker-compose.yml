@@ -1,13 +1,7 @@
 services:
-  backend:
-    build: ./backend
-    container_name: cryptool-backend
+  cryptool:
+    build: .
+    container_name: cryptool
     ports:
-      - "8080:8080"
-  frontend:
-    build: ./frontend
-    container_name: cryptool-frontend
-    ports:
-      - "5173:5173"
-    depends_on:
-      - backend
+      - "8080:80"
+    restart: unless-stopped

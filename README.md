@@ -1,37 +1,35 @@
-# CrypTool 🔐
+# CrypTool 🔐 v2.0
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](https://docs.docker.com)
+[![Nginx](https://img.shields.io/badge/Nginx-009639?logo=nginx&logoColor=white)](https://nginx.org)
+[![NIST PQC](https://img.shields.io/badge/NIST-FIPS%20203%20%2F%20204-blue)](https://csrc.nist.gov/pqc)
 
-**Laboratorio interattivo di crittografia** per esplorare algoritmi classici e moderni, comprendere le loro vulnerabilità e sperimentare con attacchi simulati.
+**Laboratorio interattivo di crittografia classica, moderna, quantistica e post-quantistica**.
+Progettato per comprendere i principi matematici, sperimentare con attacchi computazionali reali e quantistici, e visualizzare il passaggio agli standard NIST del 2024.
 
 ---
 
-## 🎯 Obiettivi del Laboratorio
+## 🎯 Panoramica e Obiettivi Didattici
 
-- **Comprendere algoritmi storici** (Cesare, Vigenère) e perché sono vulnerabili
-- **Sperimentare con hash function** (MD5, SHA-1, SHA-256, Bcrypt) e capire le differenze di sicurezza
-- **Utilizzare algoritmi moderni** (AES-256, RSA) per cifratura file e messaggi
-- **Simulare attacchi** (brute force, dictionary attack) in modo sicuro e controllato
+CrypTool guida l'utente attraverso l'intera evoluzione della sicurezza informatica:
+1. **Crittografia Classica**: Cesare, Vigenère e le debolezze storiche (brute-force, analisi statistica).
+2. **Funzioni di Hash & Password Security**: Da MD5/SHA-1 (vulnerabili a collisioni e rainbow tables) a SHA-256 e Bcrypt con cost factor adattivo.
+3. **Crittografia Moderna Autenticata**: AES-256-GCM (riservatezza + integrità) e RSA-2048/4096 (crittografia asimmetrica).
+4. **Crittografia Quantistica (QKD)**: Protocollo BB84 e rilevazione di intercettazioni via principio di indeterminazione di Heisenberg.
+5. **Attacchi Quantistici (Shor & Grover)**: Simulazione della fattorizzazione RSA via algoritmo di Shor (tempo polinomiale) e dimezzamento della sicurezza con Grover.
+6. **Crittografia Post-Quantistica (NIST Standards 2024)**:
+   - **ML-KEM (CRYSTALS-Kyber, FIPS 203)**: Key Encapsulation basato su reticoli algebrici (Module-LWE).
+   - **ML-DSA (CRYSTALS-Dilithium, FIPS 204)**: Firma digitale quantisticamente resistente.
+
 ---
 
-## 🧪 Cosa Puoi Fare
+## 🐳 Architettura Single-Container
 
-### Algoritmi Storici (⚠️ NON Sicuri)
-- **Cifrario di Cesare**: Cifra e decifra con shift alfabetico | Simula attacco brute force
-- **Cifrario di Vigenère**: Cifra con chiave alfabetica | Simula dictionary attack
-- **Hash MD5/SHA-1**: Calcola hash legacy | Simula rainbow table attack
-
-### Algoritmi Moderni (✅ Sicuri)
-- **SHA-256**: Hash crittograficamente sicuro per integrità dati
-- **Bcrypt**: Password hashing con salt e cost factor configurabile
-- **AES-256**: Cifratura simmetrica di file con password robusta
-- **RSA-2048/4096**: Crittografia asimmetrica per messaggi e scambio chiavi
-
-### Simulazioni Attacchi
-- **Brute Force**: Prova tutte le combinazioni possibili (Cesare)
-- **Dictionary Attack**: Prova parole comuni come chiavi (Vigenère, Hash)
-- **Confronto Tempi**: Misura l'efficacia del cost factor (Bcrypt)
+Il progetto adotta un'architettura integrata **single-container** per la massima portabilità (`git clone` e `docker compose up`):
+- **Nginx**: Serve il frontend statico sulla porta 80 e funge da reverse proxy verso `/api/*`.
+- **FastAPI / Uvicorn**: Backend asincrono Python 3.12 in esecuzione interna su `127.0.0.1:8080`.
+- **Supervisor**: Gestore di processi per coordinare Nginx e Uvicorn in un unico container leggero.
 
 ---
 
@@ -39,71 +37,59 @@
 
 ### Prerequisiti
 - **Docker** e **Docker Compose**
-- Porte libere: `5173` (frontend), `8080` (backend)
+- Porta locale `8080` libera
 
-### Lancio Applicazione
+### Esecuzione
 
 ```bash
-# Clona il repository
+# 1. Clona il repository
 git clone <repository-url>
 cd CrypTool
 
-# Avvia frontend + backend
+# 2. Avvia il container unico
 docker compose up --build
 ```
 
-**Accesso:**
-- 🌐 **Interfaccia Web**: http://localhost:5173
-- 📘 **API Docs (Swagger)**: http://localhost:8080/docs
+**Accesso Immediato:**
+- 🌐 **Interfaccia Web del Laboratorio**: [http://localhost:8080](http://localhost:8080)
+- 📘 **Documentazione API Interattiva (Swagger)**: [http://localhost:8080/docs](http://localhost:8080/docs)
 
 ### Arresto
 
 ```bash
-# Stop containers
 docker compose down
-
-# Stop + rimozione volumi
-docker compose down -v
 ```
 
 ---
 
-## 📚 Come Usare il Laboratorio
+## 🧪 I 10 Tool del Laboratorio
 
-1. **Esplora gli algoritmi**: Ogni card contiene una spiegazione teorica e indicatori di sicurezza
-2. **Sperimenta**: Cifra/decifra testi, genera hash, crea chiavi RSA
-3. **Simula attacchi**: Prova brute force e dictionary attack per capire le vulnerabilità
-4. **Confronta**: Misura i tempi di esecuzione (es. Bcrypt con diversi cost factor)
-5. **Impara**: Leggi le best practices e scopri quando usare ogni algoritmo
+| # | Sezione | Strumento / Algoritmo | Funzionalità Principali | Simulazione Attacco / Difesa |
+|---|---------|-----------------------|-------------------------|------------------------------|
+| 1 | **Storico** | Cifrario di Cesare | Cifratura/Decifratura con shift | Brute Force (25 combinazioni) |
+| 2 | **Storico** | Cifrario di Vigenère | Cifratura polialfabetica con chiave | Dictionary Attack |
+| 3 | **Storico/Hash** | MD5 & SHA-1 vs SHA-256 | Calcolo impronte crittografiche | Dictionary Preimage Attack |
+| 4 | **Moderno** | Bcrypt | Password hashing con salt automatico | Benchmark Cost Factor (misura tempi) |
+| 5 | **Moderno** | AES-256-GCM | Cifratura/Decifratura file autenticata | Protezione da tampering/bit-flipping |
+| 6 | **Moderno** | RSA (1024-4096 bit) | Coppie chiavi PEM, crittografia OAEP | Violabile da computer quantistici |
+| 7 | **Quantistico** | BB84 QKD | Trasmissione fotoni polarizzati (Alice/Bob) | Intercettazione Man-in-the-Middle (Eve) con QBER |
+| 8 | **Quantistico** | Algoritmo di Shor | Quantum Order-Finding per fattorizzazione | Fattorizzazione RSA in tempo polinomiale & Grover Matrix |
+| 9 | **Post-Quantum** | ML-KEM (Kyber) | FIPS 203 Key Encapsulation (512/768/1024) | Scambio chiavi resistente a Shor |
+| 10 | **Post-Quantum** | ML-DSA (Dilithium) | FIPS 204 Firme Digitali (44/65/87) | Firme e verifiche anti-manomissione |
 
 ---
 
 ## 🔗 API Reference
 
-Le API sono completamente documentate con **Swagger UI** interattivo.
+L'API REST FastAPI offre oltre 18 endpoint documentati:
+- `/api/caesar` & `/api/caesar/bruteforce`
+- `/api/vigenere` & `/api/vigenere/dictionaryattack`
+- `/api/hash` & `/api/hash/dictionaryattack`
+- `/api/hash/bcrypt` & `/api/hash/bcrypt-verify`
+- `/api/aes/encrypt-file` & `/api/aes/decrypt-file`
+- `/api/rsa/generate`, `/api/rsa/encrypt`, `/api/rsa/decrypt`
+- `/api/quantum/bb84`, `/api/quantum/shor`, `/api/quantum/grover`
+- `/api/pqc/ml-kem/keygen`, `/api/pqc/ml-kem/encapsulate`, `/api/pqc/ml-kem/decapsulate`
+- `/api/pqc/ml-dsa/keygen`, `/api/pqc/ml-dsa/sign`, `/api/pqc/ml-dsa/verify`
 
-**Base URL**: `http://localhost:8080`
-
-### Endpoint Disponibili
-
-| Categoria | Endpoint | Metodo | Descrizione |
-|-----------|----------|--------|-------------|
-| **Cesare** | `/api/caesar` | POST | Cifra/decifra con shift |
-| | `/api/caesar/bruteforce` | POST | Attacco brute force |
-| **Vigenère** | `/api/vigenere` | POST | Cifra/decifra con chiave |
-| | `/api/vigenere/dictionaryattack` | POST | Dictionary attack |
-| **Hash** | `/api/hash` | POST | Calcola hash (MD5/SHA-1/SHA-256) |
-| | `/api/hash/dictionaryattack` | POST | Trova testo originale |
-| **Bcrypt** | `/api/hash/bcrypt` | POST | Genera hash con cost factor |
-| | `/api/hash/bcrypt-verify` | POST | Verifica password |
-| **AES** | `/api/aes/encrypt-file` | POST | Cifra file con password |
-| | `/api/aes/decrypt-file` | POST | Decifra file .enc |
-| **RSA** | `/api/rsa/generate` | POST | Genera coppia chiavi |
-| | `/api/rsa/encrypt` | POST | Cifra con chiave pubblica |
-| | `/api/rsa/decrypt` | POST | Decifra con chiave privata |
-
-**Per dettagli completi e test interattivi**: http://localhost:8080/docs
-
----
-
-
+Documentazione completa visualizzabile su [http://localhost:8080/docs](http://localhost:8080/docs).
