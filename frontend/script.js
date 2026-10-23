@@ -80,7 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.results.forEach(result => {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td class="font-mono text-primary">+${result.shift}</td><td class="font-mono">${result.plaintext}</td>`;
+                    const tdShift = document.createElement('td');
+                    tdShift.className = 'font-mono text-primary';
+                    tdShift.textContent = `+${result.shift}`;
+                    const tdText = document.createElement('td');
+                    tdText.className = 'font-mono';
+                    tdText.textContent = result.plaintext;
+                    row.appendChild(tdShift);
+                    row.appendChild(tdText);
                     tbody.appendChild(row);
                 });
                 table.appendChild(tbody);
@@ -155,7 +162,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.results.forEach(result => {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td class="font-mono text-primary">${result.key}</td><td class="font-mono">${result.plaintext}</td>`;
+                    const tdKey = document.createElement('td');
+                    tdKey.className = 'font-mono text-primary';
+                    tdKey.textContent = result.key;
+                    const tdText = document.createElement('td');
+                    tdText.className = 'font-mono';
+                    tdText.textContent = result.plaintext;
+                    row.appendChild(tdKey);
+                    row.appendChild(tdText);
                     tbody.appendChild(row);
                 });
                 table.appendChild(tbody);
@@ -225,14 +239,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 resultsDiv.innerHTML = '';
 
                 if (data.results.length === 0) {
-                    resultsDiv.innerHTML = '<div class="alert alert-warning mb-0 small">Nessuna corrispondenza trovata.</div>';
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-warning mb-0 small';
+                    alertDiv.textContent = 'Nessuna corrispondenza trovata.';
+                    resultsDiv.appendChild(alertDiv);
                 } else {
-                    resultsDiv.innerHTML = `
-                        <div class="alert alert-success mb-0 small">
-                            <strong>Testo trovato:</strong> <span class="font-mono text-success">${data.results[0].text}</span><br>
-                            <small class="text-muted font-mono">${data.results[0].hash}</small>
-                        </div>
-                    `;
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-success mb-0 small';
+                    const strong = document.createElement('strong');
+                    strong.textContent = 'Testo trovato: ';
+                    const spanText = document.createElement('span');
+                    spanText.className = 'font-mono text-success';
+                    spanText.textContent = data.results[0].text;
+                    const br = document.createElement('br');
+                    const smallHash = document.createElement('small');
+                    smallHash.className = 'text-muted font-mono';
+                    smallHash.textContent = data.results[0].hash;
+
+                    alertDiv.appendChild(strong);
+                    alertDiv.appendChild(spanText);
+                    alertDiv.appendChild(br);
+                    alertDiv.appendChild(smallHash);
+                    resultsDiv.appendChild(alertDiv);
                 }
                 resultsContainer.classList.remove('d-none');
                 showToast('Attacco hash completato');
@@ -557,15 +585,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 const response = await fetch(`${API_BASE_URL}/api/quantum/shor`, { method: 'POST', body: formData });
                 const data = await response.json();
 
-                document.getElementById('shorSummaryText').innerHTML = 
-                    `Fattorizzato N = <strong>${data.n}</strong> in p = <strong>${data.true_p}</strong> e q = <strong>${data.true_q}</strong>. Chiave d = <strong>${data.recovered_private_key_d}</strong> in ${data.elapsed_seconds}s.`;
+                const summaryDiv = document.getElementById('shorSummaryText');
+                summaryDiv.textContent = `Fattorizzato N = ${data.n} in p = ${data.true_p} e q = ${data.true_q}. Chiave d = ${data.recovered_private_key_d} in ${data.elapsed_seconds}s.`;
 
                 const stepsDiv = document.getElementById('shorStepsList');
                 stepsDiv.innerHTML = '';
                 data.steps.forEach(s => {
                     const stepItem = document.createElement('div');
                     stepItem.className = 'border-bottom py-1';
-                    stepItem.innerHTML = `<strong>${s.title}</strong>: <span class="text-muted">${s.details}</span>`;
+                    const strong = document.createElement('strong');
+                    strong.textContent = s.title + ': ';
+                    const span = document.createElement('span');
+                    span.className = 'text-muted';
+                    span.textContent = s.details;
+                    stepItem.appendChild(strong);
+                    stepItem.appendChild(span);
                     stepsDiv.appendChild(stepItem);
                 });
 

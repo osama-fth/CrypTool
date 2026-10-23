@@ -11,18 +11,17 @@ app = FastAPI(
     version="2.0.0"
 )
 
-# CORS consentito su ogni origine per compatibilità flessibile
+# Nginx gestisce il reverse proxy sulla stessa origine.
+# Qui si limitano i metodi e si disabilitano le credenziali con origine jolly.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=["http://localhost:8080", "http://127.0.0.1:8080", "http://localhost:5173"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
 
-# ==========================================
-# 1. ALGORITMI CLASSICI
-# ==========================================
+# --- 1. Algoritmi Classici ---
 
 @app.post("/api/caesar", tags=["Classici"])
 async def caesar_api(text: str = Form(...), shift: int = Form(...), decode: bool = Form(False)):
@@ -78,9 +77,7 @@ async def vigenere_dictionary_attack(text: str = Form(...), dictionary: str = Fo
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Errore durante l'attacco: {str(e)}")
 
-# ==========================================
-# 2. HASH & MODERNI
-# ==========================================
+# --- 2. Funzioni di Hash e Cifrari Moderni ---
 
 @app.post("/api/hash", tags=["Hash"])
 async def hash_api(text: str = Form(...), algorithm: str = Form("sha256")):
@@ -136,8 +133,6 @@ async def bcrypt_verify_endpoint(password: str = Form(...), hashedPassword: str 
         return {"verified": ok}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Errore: {str(e)}")
 
@@ -204,9 +199,7 @@ async def decrypt_text(private_key: str = Form(...), ciphertext: str = Form(...)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Errore decifratura RSA: {str(e)}")
 
-# ==========================================
-# 3. CRITTOGRAFIA QUANTISTICA & ATTACCHI
-# ==========================================
+# --- 3. Crittografia Quantistica e Attacchi ---
 
 @app.post("/api/quantum/bb84", tags=["Quantistica"])
 async def bb84_endpoint(num_bits: int = Form(32), eve_present: bool = Form(False)):
@@ -233,9 +226,7 @@ async def grover_endpoint():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Errore recupero dati Grover: {str(e)}")
 
-# ==========================================
-# 4. POST-QUANTUM CRYPTOGRAPHY (NIST STANDARDS)
-# ==========================================
+# --- 4. Standard Post-Quantistici (NIST FIPS 203/204) ---
 
 @app.post("/api/pqc/ml-kem/keygen", tags=["Post-Quantum"])
 async def mlkem_keygen(security_level: int = Form(768)):
